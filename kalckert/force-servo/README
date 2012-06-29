@@ -1,0 +1,20 @@
+
+Communication with the Arduino board is done with the following settings.
+Baudrate 9600
+8 Data Bits
+No Parity
+One Stop Bit
+
+The commands are formated as follows:
+C#;
+where C is the command character, # are the data character(s), and ; is the end of message.
+Example; D2500; set the duration of a force pushing task to 2500 ms. 
+
+N - Number of repertions of the trial. Default is 1.
+A - Selects array or sensor imput to produce force. A0; set it to ?? to be implemented
+D - Duration in ms, default is 3000 ms.
+L - Delay beteen sensed force and produced force (not impelemened), default is 0 ms.
+P - Pause between force pushing tasks duration, default is 1500.
+E - Element number to set, default is 0.
+F - Desiderd force, will be assigned to the current element (set element with the E command). Default is 0.
+I - Number of force elemnts in the array. Maximum number is 128. Default is 24.
