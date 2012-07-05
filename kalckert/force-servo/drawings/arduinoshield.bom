@@ -1,0 +1,32 @@
+Partlist
+
+Exported from arduinoshield.sch at 2012-07-05 15.05
+
+EAGLE Version 6.2.0 Copyright (c) 1988-2012 CadSoft
+
+Assembly variant: 
+
+Part          Value          Device          Package      Library         Sheet
+
+7905          7905           7905L           TO92         linear          1
+ANALOGPIN                    PINHD-1X6       1X06         pinhead         1
+BATTERY                      MPT2            2POL254      con-phoenix-254 1
+C1            330nF          C-EU025-025X050 C025-025X050 rcl             1
+C2            100nF          C-EU025-025X050 C025-025X050 rcl             1
+C3            330nF          C-EU025-025X050 C025-025X050 rcl             1
+C4            100nF          C-EU025-025X050 C025-025X050 rcl             1
+DIGITALPIN0-7                PINHD-1X8       1X08         pinhead         1
+DIGITALPIN8+                 PINHD-1X10      1X10         pinhead         1
+IC1           MCP604P        MCP604P         DIL14        linear          1
+IC2           7806L          7806L           TO92         linear          1
+POWERPIN                     PINHD-1X8       1X08         pinhead         1
+R1                           TRIM_EU-S64W    S64W         pot             1
+R2                           TRIM_EU-S64W    S64W         pot             1
+R3            10k            R-EU_0207/7     0207/7       resistor        1
+R4            10k            R-EU_0207/7     0207/7       resistor        1
+SERVOPIN                     PINHD-1X4       1X04         pinhead         1
+SG1           F/HMB          F/HMB           F/HMB        buzzer          1
+X1                           MPT2            2POL254      con-phoenix-254 1
+X2                           MPT2            2POL254      con-phoenix-254 1
+X3                           MPT2            2POL254      con-phoenix-254 1
+X4                           MPT2            2POL254      con-phoenix-254 1
