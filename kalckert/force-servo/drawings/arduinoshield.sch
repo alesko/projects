@@ -10000,11 +10000,25 @@ type RDH, grid 15 mm</description>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
 <part name="R3" library="resistor" deviceset="R-EU_" device="0207/7" value="10k"/>
 <part name="R4" library="resistor" deviceset="R-EU_" device="0207/7" value="10k"/>
+<part name="X3" library="con-phoenix-254" deviceset="MPT2" device="">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_FARNELL" value="unknown"/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="X4" library="con-phoenix-254" deviceset="MPT2" device="">
+<attribute name="MF" value=""/>
+<attribute name="MPN" value=""/>
+<attribute name="OC_FARNELL" value="unknown"/>
+<attribute name="OC_NEWARK" value="unknown"/>
+</part>
+<part name="GND5" library="supply1" deviceset="GND" device=""/>
+<part name="GND7" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
 <plain>
-<text x="86.36" y="15.24" size="1.778" layer="91">Shield for the Arduino Board</text>
+<text x="205.74" y="20.32" size="1.778" layer="94" font="vector" rot="MR0">Shield for the Arduino Board</text>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
@@ -10040,6 +10054,18 @@ type RDH, grid 15 mm</description>
 <instance part="GND6" gate="1" x="68.58" y="27.94"/>
 <instance part="R3" gate="G$1" x="195.58" y="114.3"/>
 <instance part="R4" gate="G$1" x="195.58" y="111.76"/>
+<instance part="X3" gate="-1" x="243.84" y="114.3" rot="MR180"/>
+<instance part="X3" gate="-2" x="243.84" y="119.38" smashed="yes" rot="MR180">
+<attribute name="NAME" x="247.396" y="120.015" size="1.778" layer="95" rot="MR180"/>
+<attribute name="VALUE" x="242.824" y="122.682" size="1.778" layer="96" rot="MR180"/>
+</instance>
+<instance part="X4" gate="-1" x="243.84" y="96.52" rot="MR180"/>
+<instance part="X4" gate="-2" x="243.84" y="101.6" smashed="yes" rot="MR180">
+<attribute name="NAME" x="247.396" y="102.235" size="1.778" layer="95" rot="MR180"/>
+<attribute name="VALUE" x="242.824" y="104.902" size="1.778" layer="96" rot="MR180"/>
+</instance>
+<instance part="GND5" gate="1" x="238.76" y="91.44"/>
+<instance part="GND7" gate="1" x="238.76" y="109.22"/>
 </instances>
 <busses>
 </busses>
@@ -10124,6 +10150,18 @@ type RDH, grid 15 mm</description>
 <wire x1="76.2" y1="101.6" x2="73.66" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="GND2" gate="1" pin="GND"/>
 <wire x1="73.66" y1="101.6" x2="73.66" y2="99.06" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="X4" gate="-1" pin="1"/>
+<wire x1="241.3" y1="96.52" x2="238.76" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="238.76" y1="96.52" x2="238.76" y2="93.98" width="0.1524" layer="91"/>
+<pinref part="GND5" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="X3" gate="-1" pin="1"/>
+<wire x1="241.3" y1="114.3" x2="238.76" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="238.76" y1="114.3" x2="238.76" y2="111.76" width="0.1524" layer="91"/>
+<pinref part="GND7" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="VCCSERVO" class="0">
@@ -10301,12 +10339,22 @@ type RDH, grid 15 mm</description>
 <wire x1="200.66" y1="114.3" x2="203.2" y2="114.3" width="0.1524" layer="91"/>
 <label x="203.2" y="114.3" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="X3" gate="-2" pin="1"/>
+<wire x1="241.3" y1="119.38" x2="238.76" y2="119.38" width="0.1524" layer="91"/>
+<label x="223.52" y="119.38" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="LED_RED" class="0">
 <segment>
 <pinref part="R4" gate="G$1" pin="2"/>
 <wire x1="200.66" y1="111.76" x2="203.2" y2="111.76" width="0.1524" layer="91"/>
 <label x="203.2" y="111.76" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="X4" gate="-2" pin="1"/>
+<wire x1="241.3" y1="101.6" x2="238.76" y2="101.6" width="0.1524" layer="91"/>
+<label x="223.52" y="101.6" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$1" class="0">
