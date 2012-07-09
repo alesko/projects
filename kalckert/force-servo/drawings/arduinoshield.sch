@@ -10018,7 +10018,11 @@ type RDH, grid 15 mm</description>
 <sheets>
 <sheet>
 <plain>
-<text x="205.74" y="20.32" size="1.778" layer="94" font="vector" rot="MR0">Shield for the Arduino Board</text>
+<text x="162.56" y="20.32" size="1.778" layer="94" font="vector" rot="MR0" align="bottom-right">Shield for the Arduino Board</text>
+<text x="162.56" y="17.78" size="1.27" layer="94" font="vector" rot="MR0" align="bottom-right">Created and designed by Alexander Skoglund,</text>
+<text x="162.56" y="15.24" size="1.27" layer="94" font="vector" rot="MR0" align="bottom-right">Karolinska Institute, Stockholm</text>
+<text x="162.56" y="12.7" size="1.27" layer="94" font="vector" rot="MR0" align="bottom-right">Released under The TAPR Open Hardware License</text>
+<text x="162.56" y="10.16" size="1.27" layer="94" font="vector" rot="MR0" align="bottom-right">http://www.tapr.org/OHL</text>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>

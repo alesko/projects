@@ -12,14 +12,14 @@
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="22" name="bPlace" color="7" fill="1" visible="no" active="yes"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="yes"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
@@ -82,9 +82,8 @@
 <wire x1="9.398" y1="43.942" x2="9.398" y2="32.258" width="0.254" layer="21"/>
 <wire x1="9.398" y1="32.258" x2="-6.35" y2="32.258" width="0.254" layer="21"/>
 <wire x1="-6.35" y1="32.258" x2="-6.35" y2="43.942" width="0.254" layer="21"/>
-<text x="3.81" y="14.351" size="1.778" layer="16" rot="MR270">AlexDesign</text>
-<text x="3.683" y="14.351" size="1.778" layer="16" rot="MR270">AlexDesign</text>
-<text x="3.429" y="13.843" size="1.778" layer="16" rot="MR270">AlexDesign</text>
+<text x="1.143" y="4.953" size="1.778" layer="1">http://www.tapr.org/OHL</text>
+<text x="1.143" y="7.239" size="1.016" layer="1">Created and designed by Alexander Skoglund</text>
 </plain>
 <libraries>
 <library name="pinhead">
@@ -3224,14 +3223,11 @@ design rules under a new name.</description>
 <vertex x="0.254" y="52.086" curve="-90"/>
 <vertex x="1.254" y="53.086"/>
 <vertex x="64.262" y="53.086"/>
-<vertex x="65.786" y="53.086"/>
 <vertex x="65.786" y="51.562"/>
 <vertex x="65.786" y="40.132"/>
-<vertex x="68.326" y="40.132"/>
 <vertex x="68.326" y="37.592"/>
-<vertex x="68.326" y="4.826"/>
-<vertex x="65.786" y="4.826"/>
-<vertex x="65.786" y="2.286"/>
+<vertex x="68.326" y="5.334"/>
+<vertex x="65.786" y="2.794"/>
 <vertex x="65.786" y="1.254" curve="-90"/>
 <vertex x="64.786" y="0.254"/>
 </polygon>
@@ -3243,14 +3239,11 @@ design rules under a new name.</description>
 <vertex x="0.254" y="52.086" curve="-90"/>
 <vertex x="1.254" y="53.086"/>
 <vertex x="64.262" y="53.086"/>
-<vertex x="65.786" y="53.086"/>
 <vertex x="65.786" y="51.562"/>
 <vertex x="65.786" y="40.132"/>
-<vertex x="68.326" y="40.132"/>
 <vertex x="68.326" y="37.592"/>
-<vertex x="68.326" y="4.826"/>
-<vertex x="65.786" y="4.826"/>
-<vertex x="65.786" y="2.286"/>
+<vertex x="68.326" y="5.334"/>
+<vertex x="65.786" y="2.794"/>
 <vertex x="65.786" y="1.254" curve="-90"/>
 <vertex x="64.786" y="0.254"/>
 </polygon>
