@@ -11,10 +11,11 @@
 int flexpin1 = 1;  // analog pin used to connect the flexiforce
 int flexpin0 = 0;  // analog pin used to connect the flexiforce
 int pospin = 2;    // analog pin used to connect the position potentiometer
-int speakerPin = 7;
+int sliderPin = 3; // analog pin used to connect the slider potentiometer
+int speakerPin = 4; // 7
 int servoPin = 9;
-int ledPin = 5;
-int redledPin = 4;
+int ledPin = 7; // 5
+int redledPin = 6; // 4
 
 int sendVal = 0;
 int fieldIndex = 0;
