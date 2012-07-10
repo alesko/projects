@@ -834,6 +834,58 @@ DIN A4, landscape with location and doc. field</description>
 <text x="4.445" y="6.985" size="1.27" layer="25" ratio="10">&gt;NAME</text>
 <text x="-4.445" y="-3.81" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
 </package>
+<package name="F/QMX">
+<description>&lt;b&gt;BUZZER&lt;/b&gt;</description>
+<wire x1="3.175" y1="2.54" x2="4.191" y2="2.54" width="0.1524" layer="21"/>
+<wire x1="3.683" y1="2.032" x2="3.683" y2="3.048" width="0.1524" layer="21"/>
+<circle x="0" y="0" radius="6.096" width="0.1524" layer="21"/>
+<circle x="0" y="0" radius="1.143" width="0.1524" layer="21"/>
+<circle x="3.683" y="2.54" radius="0.889" width="0.1524" layer="21"/>
+<pad name="-" x="-3.2512" y="0" drill="0.9144" diameter="2.159" shape="octagon"/>
+<pad name="+" x="3.2512" y="0" drill="0.9144" diameter="2.159" shape="octagon"/>
+<text x="4.699" y="4.445" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="-3.556" y="-3.81" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
+</package>
+<package name="EFBAA40D101">
+<description>&lt;b&gt;Piezoelectric Acoustic Transducer&lt;/b&gt;&lt;p&gt;
+Source: Panbasonic .. 2SC1685.pdf</description>
+<circle x="0" y="0" radius="8.375" width="0.2032" layer="21"/>
+<pad name="1" x="-5" y="0" drill="1.1" diameter="1.6764"/>
+<pad name="2" x="5" y="0" drill="1.1" diameter="1.6764"/>
+<text x="-3.175" y="3.175" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="7.2" y1="-0.8" x2="8.375" y2="0.8" layer="21"/>
+</package>
+<package name="EFBRD22C41">
+<description>&lt;b&gt;Piezoelectric Acoustic Transducer&lt;/b&gt;&lt;p&gt;
+Source: Panbasonic .. 2SC1685.pdf</description>
+<circle x="0" y="0" radius="10.9" width="0.2032" layer="21"/>
+<pad name="1" x="-5" y="0" drill="1.1" diameter="1.6764"/>
+<pad name="2" x="5" y="0" drill="1.1" diameter="1.6764"/>
+<text x="-3.175" y="3.175" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="9.675" y1="-0.8" x2="10.85" y2="0.8" layer="21"/>
+</package>
+<package name="EFBRD24C411">
+<description>&lt;b&gt;Piezoelectric Acoustic Transducer&lt;/b&gt;&lt;p&gt;
+Source: Panbasonic .. 2SC1685.pdf</description>
+<circle x="0" y="0" radius="11.9" width="0.2032" layer="21"/>
+<pad name="1" x="-5" y="0" drill="1.1" diameter="1.6764"/>
+<pad name="2" x="5" y="0" drill="1.1" diameter="1.6764"/>
+<text x="-3.175" y="3.175" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="10.675" y1="-0.8" x2="11.85" y2="0.8" layer="21"/>
+</package>
+<package name="EFBRD22C413">
+<description>&lt;b&gt;Piezoelectric Acoustic Transducer&lt;/b&gt;&lt;p&gt;
+Source: Panbasonic .. 2SC1685.pdf</description>
+<circle x="0" y="0" radius="10.9" width="0.2032" layer="21"/>
+<pad name="1" x="-5" y="0" drill="1.1" diameter="1.6764"/>
+<pad name="2" x="5" y="0" drill="1.1" diameter="1.6764"/>
+<text x="-3.175" y="3.175" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="9.675" y1="-0.8" x2="10.85" y2="0.8" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="B">
@@ -848,6 +900,47 @@ DIN A4, landscape with location and doc. field</description>
 <pin name="-" x="5.08" y="-2.54" visible="pad" length="short" direction="pas" rot="R180"/>
 <pin name="+" x="-2.54" y="-2.54" visible="pad" length="short" direction="pas"/>
 </symbol>
+<symbol name="BWS">
+<wire x1="-2.54" y1="5.08" x2="5.08" y2="5.08" width="0.254" layer="94" curve="180"/>
+<wire x1="-2.54" y1="5.08" x2="5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="0" y1="3.175" x2="1.27" y2="3.175" width="0.1524" layer="94" curve="-180" cap="flat"/>
+<wire x1="1.27" y1="3.175" x2="2.54" y2="3.175" width="0.1524" layer="94" curve="180" cap="flat"/>
+<wire x1="2.54" y1="-2.54" x2="2.54" y2="1.397" width="0.1524" layer="94"/>
+<wire x1="0" y1="-2.54" x2="0" y2="1.397" width="0.1524" layer="94"/>
+<text x="-2.54" y="6.35" size="1.778" layer="95">&gt;NAME</text>
+<text x="6.35" y="0" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="2" x="5.08" y="-2.54" visible="pad" length="short" direction="pas" rot="R180"/>
+<pin name="1" x="-2.54" y="-2.54" visible="pad" length="short" direction="pas"/>
+</symbol>
+<symbol name="B2P">
+<wire x1="-1.27" y1="3.175" x2="0" y2="3.175" width="0.1524" layer="94"/>
+<wire x1="0" y1="3.175" x2="0" y2="3.81" width="0.1524" layer="94"/>
+<wire x1="0" y1="3.175" x2="0" y2="2.54" width="0.1524" layer="94"/>
+<wire x1="0.635" y1="4.445" x2="0.635" y2="1.905" width="0.1524" layer="94"/>
+<wire x1="0.635" y1="1.905" x2="1.905" y2="1.905" width="0.1524" layer="94"/>
+<wire x1="1.905" y1="1.905" x2="1.905" y2="4.445" width="0.1524" layer="94"/>
+<wire x1="1.905" y1="4.445" x2="0.635" y2="4.445" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="3.81" x2="2.54" y2="3.175" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="3.175" x2="3.81" y2="3.175" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="3.175" x2="2.54" y2="2.54" width="0.1524" layer="94"/>
+<wire x1="2.54" y1="-2.54" x2="2.54" y2="1.27" width="0.1524" layer="94"/>
+<wire x1="0" y1="-2.54" x2="0" y2="1.27" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="1.27" x2="0" y2="1.27" width="0.254" layer="94"/>
+<wire x1="5.08" y1="1.27" x2="5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="5.08" y1="5.08" x2="5.715" y2="5.08" width="0.254" layer="94"/>
+<wire x1="5.715" y1="5.08" x2="5.715" y2="5.715" width="0.254" layer="94"/>
+<wire x1="5.715" y1="5.715" x2="-3.175" y2="5.715" width="0.254" layer="94"/>
+<wire x1="-3.175" y1="5.715" x2="-3.175" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-3.175" y1="5.08" x2="-2.54" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="5.08" x2="-2.54" y2="1.27" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="5.08" x2="5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="2.54" y1="1.27" x2="5.08" y2="1.27" width="0.254" layer="94"/>
+<wire x1="0" y1="1.27" x2="2.54" y2="1.27" width="0.254" layer="94"/>
+<text x="-2.54" y="6.35" size="1.778" layer="95">&gt;NAME</text>
+<text x="6.35" y="0" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="2" x="5.08" y="-2.54" visible="pad" length="short" direction="pas" rot="R180"/>
+<pin name="1" x="-2.54" y="-2.54" visible="pad" length="short" direction="pas"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="F/HMB" prefix="SG">
@@ -860,6 +953,93 @@ DIN A4, landscape with location and doc. field</description>
 <connects>
 <connect gate="G$1" pin="+" pad="+"/>
 <connect gate="G$1" pin="-" pad="-"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="MF" value="" constant="no"/>
+<attribute name="MPN" value="" constant="no"/>
+<attribute name="OC_FARNELL" value="unknown" constant="no"/>
+<attribute name="OC_NEWARK" value="unknown" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="F/QMX" prefix="SG">
+<description>&lt;b&gt;BUZZER&lt;/b&gt;&lt;p&gt; Source: Buerklin</description>
+<gates>
+<gate name="G$1" symbol="BWS" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="F/QMX">
+<connects>
+<connect gate="G$1" pin="1" pad="-"/>
+<connect gate="G$1" pin="2" pad="+"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="MF" value="" constant="no"/>
+<attribute name="MPN" value="" constant="no"/>
+<attribute name="OC_FARNELL" value="unknown" constant="no"/>
+<attribute name="OC_NEWARK" value="unknown" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="EFB?" prefix="SG">
+<description>&lt;b&gt;Piezoelectric Acoustic Transducer&lt;/b&gt;&lt;p&gt;
+Source: Panbasonic .. 2SC1685.pdf</description>
+<gates>
+<gate name="G$1" symbol="B2P" x="0" y="0"/>
+</gates>
+<devices>
+<device name="AA40D101" package="EFBAA40D101">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="MF" value="" constant="no"/>
+<attribute name="MPN" value="" constant="no"/>
+<attribute name="OC_FARNELL" value="unknown" constant="no"/>
+<attribute name="OC_NEWARK" value="unknown" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="RD22C41" package="EFBRD22C41">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="MF" value="" constant="no"/>
+<attribute name="MPN" value="" constant="no"/>
+<attribute name="OC_FARNELL" value="unknown" constant="no"/>
+<attribute name="OC_NEWARK" value="unknown" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="RD24C411" package="EFBRD24C411">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="MF" value="" constant="no"/>
+<attribute name="MPN" value="" constant="no"/>
+<attribute name="OC_FARNELL" value="unknown" constant="no"/>
+<attribute name="OC_NEWARK" value="unknown" constant="no"/>
+</technology>
+</technologies>
+</device>
+<device name="RD22C413" package="EFBRD22C413">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
 </connects>
 <technologies>
 <technology name="">
@@ -10014,6 +10194,11 @@ type RDH, grid 15 mm</description>
 <part name="GND7" library="supply1" deviceset="GND" device=""/>
 <part name="IC3" library="linear" deviceset="78*" device="T" technology="06"/>
 <part name="IC4" library="linear" deviceset="79*" device="T" technology="05"/>
+<part name="SG4" library="buzzer" deviceset="F/QMX" device=""/>
+<part name="SG2" library="buzzer" deviceset="EFB?" device="RD22C41"/>
+<part name="SG3" library="buzzer" deviceset="EFB?" device="AA40D101"/>
+<part name="SG5" library="buzzer" deviceset="EFB?" device="RD22C413"/>
+<part name="SG6" library="buzzer" deviceset="EFB?" device="RD24C411"/>
 </parts>
 <sheets>
 <sheet>
@@ -10070,6 +10255,11 @@ type RDH, grid 15 mm</description>
 <instance part="GND7" gate="1" x="238.76" y="109.22"/>
 <instance part="IC3" gate="A1" x="53.34" y="63.5"/>
 <instance part="IC4" gate="A1" x="53.34" y="33.02"/>
+<instance part="SG4" gate="G$1" x="139.7" y="53.34"/>
+<instance part="SG2" gate="G$1" x="165.1" y="60.96"/>
+<instance part="SG3" gate="G$1" x="195.58" y="60.96"/>
+<instance part="SG5" gate="G$1" x="177.8" y="50.8"/>
+<instance part="SG6" gate="G$1" x="185.42" y="78.74"/>
 </instances>
 <busses>
 </busses>

@@ -88,6 +88,8 @@ void run_controller(int duration, int force_des)
     { 
       digitalWrite(ledPin ,HIGH);
     }
+    Serial.print(gtime);
+    Serial.print(" ");
     Serial.print(tau_des);
     Serial.print(" ");
     Serial.println(tau);

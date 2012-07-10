@@ -58,14 +58,21 @@ fpname = strftime("%Y%m%d-%H%M%S")+'.log'
 # Open file for printing
 fp = open(fpname,"w")
 
-t0 = datetime.now()
+#t0 = datetime.now()
 if (ser.isOpen()):
-	dt = datetime.now() - t0
-	if (dt.seconds == 0):
-		dtstr = dt.microseconds
-	else:
-		dtstr = dt.seconds*1000000+dt.microseconds
-	fp.write(str(dtstr))
+    line = ser.readline()
+    print line
+    while ( line > -1 ):
+        line = ser.readline()
+        print line
+        line = -1
+
+	#dt = datetime.now() - t0
+	#if (dt.seconds == 0):
+	#	dtstr = dt.microseconds
+	#else:
+	#	dtstr = dt.seconds*1000000+dt.microseconds
+	#fp.write(str(dtstr))
 
 else:
 	print "Error when opening port"

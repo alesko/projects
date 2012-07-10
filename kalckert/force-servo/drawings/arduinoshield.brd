@@ -390,6 +390,58 @@
 <text x="4.445" y="6.985" size="1.27" layer="25" ratio="10">&gt;NAME</text>
 <text x="-4.445" y="-3.81" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
 </package>
+<package name="F/QMX">
+<description>&lt;b&gt;BUZZER&lt;/b&gt;</description>
+<wire x1="3.175" y1="2.54" x2="4.191" y2="2.54" width="0.1524" layer="21"/>
+<wire x1="3.683" y1="2.032" x2="3.683" y2="3.048" width="0.1524" layer="21"/>
+<circle x="0" y="0" radius="6.096" width="0.1524" layer="21"/>
+<circle x="0" y="0" radius="1.143" width="0.1524" layer="21"/>
+<circle x="3.683" y="2.54" radius="0.889" width="0.1524" layer="21"/>
+<pad name="-" x="-3.2512" y="0" drill="0.9144" diameter="2.159" shape="octagon"/>
+<pad name="+" x="3.2512" y="0" drill="0.9144" diameter="2.159" shape="octagon"/>
+<text x="4.699" y="4.445" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="-3.556" y="-3.81" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
+</package>
+<package name="EFBRD22C41">
+<description>&lt;b&gt;Piezoelectric Acoustic Transducer&lt;/b&gt;&lt;p&gt;
+Source: Panbasonic .. 2SC1685.pdf</description>
+<circle x="0" y="0" radius="10.9" width="0.2032" layer="21"/>
+<pad name="1" x="-5" y="0" drill="1.1" diameter="1.6764"/>
+<pad name="2" x="5" y="0" drill="1.1" diameter="1.6764"/>
+<text x="-3.175" y="3.175" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="9.675" y1="-0.8" x2="10.85" y2="0.8" layer="21"/>
+</package>
+<package name="EFBAA40D101">
+<description>&lt;b&gt;Piezoelectric Acoustic Transducer&lt;/b&gt;&lt;p&gt;
+Source: Panbasonic .. 2SC1685.pdf</description>
+<circle x="0" y="0" radius="8.375" width="0.2032" layer="21"/>
+<pad name="1" x="-5" y="0" drill="1.1" diameter="1.6764"/>
+<pad name="2" x="5" y="0" drill="1.1" diameter="1.6764"/>
+<text x="-3.175" y="3.175" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="7.2" y1="-0.8" x2="8.375" y2="0.8" layer="21"/>
+</package>
+<package name="EFBRD22C413">
+<description>&lt;b&gt;Piezoelectric Acoustic Transducer&lt;/b&gt;&lt;p&gt;
+Source: Panbasonic .. 2SC1685.pdf</description>
+<circle x="0" y="0" radius="10.9" width="0.2032" layer="21"/>
+<pad name="1" x="-5" y="0" drill="1.1" diameter="1.6764"/>
+<pad name="2" x="5" y="0" drill="1.1" diameter="1.6764"/>
+<text x="-3.175" y="3.175" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="9.675" y1="-0.8" x2="10.85" y2="0.8" layer="21"/>
+</package>
+<package name="EFBRD24C411">
+<description>&lt;b&gt;Piezoelectric Acoustic Transducer&lt;/b&gt;&lt;p&gt;
+Source: Panbasonic .. 2SC1685.pdf</description>
+<circle x="0" y="0" radius="11.9" width="0.2032" layer="21"/>
+<pad name="1" x="-5" y="0" drill="1.1" diameter="1.6764"/>
+<pad name="2" x="5" y="0" drill="1.1" diameter="1.6764"/>
+<text x="-3.175" y="3.175" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="10.675" y1="-0.8" x2="11.85" y2="0.8" layer="21"/>
+</package>
 </packages>
 </library>
 <library name="linear">
@@ -2934,6 +2986,36 @@ design rules under a new name.</description>
 </element>
 <element name="IC3" library="linear" package="TO220H" value="7806T" x="11.43" y="25.527" rot="R90"/>
 <element name="IC4" library="linear" package="TO220H" value="" x="11.43" y="13.081" rot="R90"/>
+<element name="SG4" library="buzzer" package="F/QMX" value="F/QMX" x="80.137" y="59.69" rot="R90">
+<attribute name="OC_NEWARK" value="unknown" x="80.137" y="59.69" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MPN" value="" x="80.137" y="59.69" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MF" value="" x="80.137" y="59.69" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="OC_FARNELL" value="unknown" x="80.137" y="59.69" size="1.778" layer="27" rot="R90" display="off"/>
+</element>
+<element name="SG2" library="buzzer" package="EFBRD22C41" value="EFBRD22C41" x="4.572" y="-11.176">
+<attribute name="OC_NEWARK" value="unknown" x="4.572" y="-11.176" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="4.572" y="-11.176" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="" x="4.572" y="-11.176" size="1.778" layer="27" display="off"/>
+<attribute name="OC_FARNELL" value="unknown" x="4.572" y="-11.176" size="1.778" layer="27" display="off"/>
+</element>
+<element name="SG3" library="buzzer" package="EFBAA40D101" value="EFBAA40D101" x="2.032" y="-30.734">
+<attribute name="OC_NEWARK" value="unknown" x="2.032" y="-30.734" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="2.032" y="-30.734" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="" x="2.032" y="-30.734" size="1.778" layer="27" display="off"/>
+<attribute name="OC_FARNELL" value="unknown" x="2.032" y="-30.734" size="1.778" layer="27" display="off"/>
+</element>
+<element name="SG5" library="buzzer" package="EFBRD22C413" value="EFBRD22C413" x="4.572" y="-50.292">
+<attribute name="OC_NEWARK" value="unknown" x="4.572" y="-50.292" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="4.572" y="-50.292" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="" x="4.572" y="-50.292" size="1.778" layer="27" display="off"/>
+<attribute name="OC_FARNELL" value="unknown" x="4.572" y="-50.292" size="1.778" layer="27" display="off"/>
+</element>
+<element name="SG6" library="buzzer" package="EFBRD24C411" value="EFBRD24C411" x="5.588" y="-73.406">
+<attribute name="OC_NEWARK" value="unknown" x="5.588" y="-73.406" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="5.588" y="-73.406" size="1.778" layer="27" display="off"/>
+<attribute name="MF" value="" x="5.588" y="-73.406" size="1.778" layer="27" display="off"/>
+<attribute name="OC_FARNELL" value="unknown" x="5.588" y="-73.406" size="1.778" layer="27" display="off"/>
+</element>
 </elements>
 <signals>
 <signal name="-9V">
