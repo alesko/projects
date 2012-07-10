@@ -27,7 +27,8 @@ char command;
 int ready = 0;
 
 // Variable that the user can change
-int Run = 0;
+int RunExp = 0;
+int RunMeasure = 0;
 int SensorOrArrayInput = 0; // 0 is sensor
 int NoOfRepetions = 1;
 int Duration = 3000;
@@ -133,6 +134,15 @@ void run_experiment(){
     }
     delay(PauseDuration);
   }
+}
+
+void run_measure(){
+  
+  int m0 = analogRead(flexpin0);
+  int m1 = analogRead(flexpin1);
+  Serial.print(m0);
+  Serial.print(" ");
+  Serial.println(m1);
 }
 
 void setup_servo()
@@ -251,7 +261,10 @@ void loop() {
     ready = 0;
     switch (command){
       case 'S':
-        Run = 1;
+        RunExp = 1;
+        break;
+      case 'M':
+        RunMeasure = 1;
         break;
       case 'A':
         //Serial.print("i ");
@@ -322,10 +335,15 @@ void loop() {
 
     }
   }
-  if( Run == 1)
+  if( RunExp == 1)
   {
     run_experiment();
-    Run = 0;
+    RunExp = 0;
+  }
+  if( RunMeasure == 1)
+  {
+    run_measure();
+    RunMeasure = 0;
   }
   delay(1);        // delay in between reads for stability
   

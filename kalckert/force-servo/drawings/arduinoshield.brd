@@ -402,46 +402,6 @@
 <text x="4.699" y="4.445" size="1.27" layer="25" ratio="10">&gt;NAME</text>
 <text x="-3.556" y="-3.81" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
 </package>
-<package name="EFBRD22C41">
-<description>&lt;b&gt;Piezoelectric Acoustic Transducer&lt;/b&gt;&lt;p&gt;
-Source: Panbasonic .. 2SC1685.pdf</description>
-<circle x="0" y="0" radius="10.9" width="0.2032" layer="21"/>
-<pad name="1" x="-5" y="0" drill="1.1" diameter="1.6764"/>
-<pad name="2" x="5" y="0" drill="1.1" diameter="1.6764"/>
-<text x="-3.175" y="3.175" size="1.27" layer="25">&gt;NAME</text>
-<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
-<rectangle x1="9.675" y1="-0.8" x2="10.85" y2="0.8" layer="21"/>
-</package>
-<package name="EFBAA40D101">
-<description>&lt;b&gt;Piezoelectric Acoustic Transducer&lt;/b&gt;&lt;p&gt;
-Source: Panbasonic .. 2SC1685.pdf</description>
-<circle x="0" y="0" radius="8.375" width="0.2032" layer="21"/>
-<pad name="1" x="-5" y="0" drill="1.1" diameter="1.6764"/>
-<pad name="2" x="5" y="0" drill="1.1" diameter="1.6764"/>
-<text x="-3.175" y="3.175" size="1.27" layer="25">&gt;NAME</text>
-<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
-<rectangle x1="7.2" y1="-0.8" x2="8.375" y2="0.8" layer="21"/>
-</package>
-<package name="EFBRD22C413">
-<description>&lt;b&gt;Piezoelectric Acoustic Transducer&lt;/b&gt;&lt;p&gt;
-Source: Panbasonic .. 2SC1685.pdf</description>
-<circle x="0" y="0" radius="10.9" width="0.2032" layer="21"/>
-<pad name="1" x="-5" y="0" drill="1.1" diameter="1.6764"/>
-<pad name="2" x="5" y="0" drill="1.1" diameter="1.6764"/>
-<text x="-3.175" y="3.175" size="1.27" layer="25">&gt;NAME</text>
-<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
-<rectangle x1="9.675" y1="-0.8" x2="10.85" y2="0.8" layer="21"/>
-</package>
-<package name="EFBRD24C411">
-<description>&lt;b&gt;Piezoelectric Acoustic Transducer&lt;/b&gt;&lt;p&gt;
-Source: Panbasonic .. 2SC1685.pdf</description>
-<circle x="0" y="0" radius="11.9" width="0.2032" layer="21"/>
-<pad name="1" x="-5" y="0" drill="1.1" diameter="1.6764"/>
-<pad name="2" x="5" y="0" drill="1.1" diameter="1.6764"/>
-<text x="-3.175" y="3.175" size="1.27" layer="25">&gt;NAME</text>
-<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
-<rectangle x1="10.675" y1="-0.8" x2="11.85" y2="0.8" layer="21"/>
-</package>
 </packages>
 </library>
 <library name="linear">
@@ -2747,6 +2707,30 @@ type 0207, grid 7.5 mm</description>
 <rectangle x1="-3.429" y1="-0.3048" x2="-3.175" y2="0.3048" layer="51"/>
 <rectangle x1="3.175" y1="-0.3048" x2="3.429" y2="0.3048" layer="51"/>
 </package>
+<package name="C025-025X050">
+<description>&lt;b&gt;CAPACITOR&lt;/b&gt;&lt;p&gt;
+grid 2.5 mm, outline 2.5 x 5 mm</description>
+<wire x1="-2.159" y1="1.27" x2="2.159" y2="1.27" width="0.1524" layer="21"/>
+<wire x1="2.159" y1="-1.27" x2="-2.159" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="2.413" y1="1.016" x2="2.413" y2="-1.016" width="0.1524" layer="21"/>
+<wire x1="-2.413" y1="1.016" x2="-2.413" y2="-1.016" width="0.1524" layer="21"/>
+<wire x1="2.159" y1="1.27" x2="2.413" y2="1.016" width="0.1524" layer="21" curve="-90"/>
+<wire x1="-2.413" y1="1.016" x2="-2.159" y2="1.27" width="0.1524" layer="21" curve="-90"/>
+<wire x1="2.159" y1="-1.27" x2="2.413" y2="-1.016" width="0.1524" layer="21" curve="90"/>
+<wire x1="-2.413" y1="-1.016" x2="-2.159" y2="-1.27" width="0.1524" layer="21" curve="90"/>
+<wire x1="0.762" y1="0" x2="0.381" y2="0" width="0.1524" layer="51"/>
+<wire x1="0.381" y1="0" x2="0.254" y2="0" width="0.1524" layer="21"/>
+<wire x1="0.254" y1="0" x2="0.254" y2="0.762" width="0.254" layer="21"/>
+<wire x1="0.254" y1="0" x2="0.254" y2="-0.762" width="0.254" layer="21"/>
+<wire x1="-0.254" y1="0.762" x2="-0.254" y2="0" width="0.254" layer="21"/>
+<wire x1="-0.254" y1="0" x2="-0.254" y2="-0.762" width="0.254" layer="21"/>
+<wire x1="-0.254" y1="0" x2="-0.381" y2="0" width="0.1524" layer="21"/>
+<wire x1="-0.381" y1="0" x2="-0.762" y2="0" width="0.1524" layer="51"/>
+<pad name="1" x="-1.27" y="0" drill="0.8128" shape="octagon"/>
+<pad name="2" x="1.27" y="0" drill="0.8128" shape="octagon"/>
+<text x="-2.286" y="1.524" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="-2.286" y="-2.794" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
+</package>
 </packages>
 </library>
 </libraries>
@@ -2992,30 +2976,7 @@ design rules under a new name.</description>
 <attribute name="MF" value="" x="80.137" y="59.69" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="OC_FARNELL" value="unknown" x="80.137" y="59.69" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="SG2" library="buzzer" package="EFBRD22C41" value="EFBRD22C41" x="4.572" y="-11.176">
-<attribute name="OC_NEWARK" value="unknown" x="4.572" y="-11.176" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="" x="4.572" y="-11.176" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="4.572" y="-11.176" size="1.778" layer="27" display="off"/>
-<attribute name="OC_FARNELL" value="unknown" x="4.572" y="-11.176" size="1.778" layer="27" display="off"/>
-</element>
-<element name="SG3" library="buzzer" package="EFBAA40D101" value="EFBAA40D101" x="2.032" y="-30.734">
-<attribute name="OC_NEWARK" value="unknown" x="2.032" y="-30.734" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="" x="2.032" y="-30.734" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="2.032" y="-30.734" size="1.778" layer="27" display="off"/>
-<attribute name="OC_FARNELL" value="unknown" x="2.032" y="-30.734" size="1.778" layer="27" display="off"/>
-</element>
-<element name="SG5" library="buzzer" package="EFBRD22C413" value="EFBRD22C413" x="4.572" y="-50.292">
-<attribute name="OC_NEWARK" value="unknown" x="4.572" y="-50.292" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="" x="4.572" y="-50.292" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="4.572" y="-50.292" size="1.778" layer="27" display="off"/>
-<attribute name="OC_FARNELL" value="unknown" x="4.572" y="-50.292" size="1.778" layer="27" display="off"/>
-</element>
-<element name="SG6" library="buzzer" package="EFBRD24C411" value="EFBRD24C411" x="5.588" y="-73.406">
-<attribute name="OC_NEWARK" value="unknown" x="5.588" y="-73.406" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="" x="5.588" y="-73.406" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="5.588" y="-73.406" size="1.778" layer="27" display="off"/>
-<attribute name="OC_FARNELL" value="unknown" x="5.588" y="-73.406" size="1.778" layer="27" display="off"/>
-</element>
+<element name="C5" library="resistor" package="C025-025X050" value="10uF" x="-3.683" y="-3.429"/>
 </elements>
 <signals>
 <signal name="-9V">
@@ -3122,6 +3083,8 @@ design rules under a new name.</description>
 <wire x1="21.59" y1="15.621" x2="21.59" y2="20.32" width="0.254" layer="16"/>
 <wire x1="39.37" y1="20.32" x2="39.37" y2="20.066" width="0.254" layer="16"/>
 <wire x1="21.59" y1="15.24" x2="21.59" y2="15.621" width="0.254" layer="16"/>
+<contactref element="C5" pad="2"/>
+<wire x1="-2.413" y1="-3.429" x2="21.59" y2="15.24" width="0" layer="19" extent="16-16"/>
 </signal>
 <signal name="VCCSERVO">
 <contactref element="SERVOPIN" pad="2"/>
@@ -3329,6 +3292,11 @@ design rules under a new name.</description>
 <vertex x="65.786" y="1.254" curve="-90"/>
 <vertex x="64.786" y="0.254"/>
 </polygon>
+</signal>
+<signal name="RESET">
+<contactref element="POWERPIN" pad="1"/>
+<contactref element="C5" pad="1"/>
+<wire x1="-4.953" y1="-3.429" x2="27.94" y2="2.54" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 </board>
