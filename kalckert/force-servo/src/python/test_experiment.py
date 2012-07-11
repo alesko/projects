@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # Import libs
-from Tkinter import *
+#from Tkinter import *
 import serial
 import time
 #from datetime import date
@@ -65,18 +65,21 @@ if (ser.isOpen()):
     while ( line > -1 ):
         line = ser.readline()
         print line
+        fp.write(line)
         line = -1
 
-	#dt = datetime.now() - t0
-	#if (dt.seconds == 0):
-	#	dtstr = dt.microseconds
-	#else:
-	#	dtstr = dt.seconds*1000000+dt.microseconds
-	#fp.write(str(dtstr))
 
 else:
-	print "Error when opening port"
+    print "Error when opening port"
 
 fp.close()
 
 ser.close()             # close port
+
+
+#dt = datetime.now() - t0
+#if (dt.seconds == 0):
+#	dtstr = dt.microseconds
+#else:
+#	dtstr = dt.seconds*1000000+dt.microseconds
+#fp.write(str(dtstr))
