@@ -1,4 +1,11 @@
 
+IMPORTANT!
+
+The capacitor on the shield (between RESET and GND) is used to prevet an auto reset
+everytime a serial connection is established. However, it can NOT be present during reprogramming!
+
+
+
 Communication with the Arduino board is done with the following settings.
 Baudrate 9600
 8 Data Bits

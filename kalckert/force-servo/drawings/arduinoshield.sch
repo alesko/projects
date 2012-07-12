@@ -12303,7 +12303,7 @@ Metric Code Size 5664</description>
 <part name="IC3" library="linear" deviceset="78*" device="T" technology="06"/>
 <part name="IC4" library="linear" deviceset="79*" device="T" technology="05"/>
 <part name="SG4" library="buzzer" deviceset="F/QMX" device=""/>
-<part name="C5" library="resistor" deviceset="C-EU" device="025-025X050" value="10uF"/>
+<part name="C6" library="resistor" deviceset="C-EU" device="050-025X075" value="10uF"/>
 </parts>
 <sheets>
 <sheet>
@@ -12361,7 +12361,7 @@ Metric Code Size 5664</description>
 <instance part="IC3" gate="A1" x="53.34" y="63.5"/>
 <instance part="IC4" gate="A1" x="53.34" y="33.02"/>
 <instance part="SG4" gate="G$1" x="139.7" y="53.34"/>
-<instance part="C5" gate="G$1" x="170.18" y="144.78"/>
+<instance part="C6" gate="G$1" x="170.18" y="144.78"/>
 </instances>
 <busses>
 </busses>
@@ -12434,9 +12434,9 @@ Metric Code Size 5664</description>
 <segment>
 <pinref part="POWERPIN" gate="A" pin="6"/>
 <label x="154.94" y="137.16" size="1.778" layer="95"/>
-<pinref part="C5" gate="G$1" pin="2"/>
 <wire x1="144.78" y1="137.16" x2="170.18" y2="137.16" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="137.16" x2="170.18" y2="139.7" width="0.1524" layer="91"/>
+<pinref part="C6" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="GND4" gate="1" pin="GND"/>
@@ -12669,10 +12669,10 @@ Metric Code Size 5664</description>
 <net name="RESET" class="0">
 <segment>
 <pinref part="POWERPIN" gate="A" pin="1"/>
-<pinref part="C5" gate="G$1" pin="1"/>
 <wire x1="144.78" y1="149.86" x2="170.18" y2="149.86" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="149.86" x2="170.18" y2="147.32" width="0.1524" layer="91"/>
 <label x="154.94" y="149.86" size="1.778" layer="95"/>
+<pinref part="C6" gate="G$1" pin="1"/>
 </segment>
 </net>
 </nets>

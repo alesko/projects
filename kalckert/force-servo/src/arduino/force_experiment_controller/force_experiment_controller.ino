@@ -4,15 +4,19 @@
  */
  
 #include <Servo.h>
- 
+
+// Analog in pins
 int flexpin1 = 1;  // analog pin used to connect the flexiforce
 int flexpin0 = 0;  // analog pin used to connect the flexiforce
 int pospin = 2;    // analog pin used to connect the position potentiometer
 int sliderPin = 3; // analog pin used to connect the slider potentiometer
+
+// Digital IO pins
 int speakerPin = 4; // 7
 int servoPin = 9;
 int ledPin = 7; // 5
 int redledPin = 6; // 4
+int buttonPin = 0;
 
 int sendVal = 0;
 int fieldIndex = 0;
@@ -25,6 +29,8 @@ char command;
 int ready = 0;
 int floatflag = 0;
 float dec;
+int buttonState = 0;         // variable for reading the pushbutton status
+
 
 // Variable that the user can change
 int RunExp = 0;
@@ -139,6 +145,44 @@ void run_experiment(){
   }
 }
 
+void run_calibration(){
+  
+  gtime = millis();  
+  unsigned long t0=gtime;
+  unsigned long acc = 0;
+  int firstroundflag = 1;
+  int average0, average1;
+  int iter=10;
+  
+  while( acc < Duration)
+  {
+    // start with 10 measurments
+    if ( firstroundflag == 1)
+    {
+      average0 = 0.1*analogRead(flexpin0);
+      average1 = 0.1*analogRead(flexpin1);
+      for(int i=1; i < 10;i++)
+      {
+        average0 =  average0 + 0.1*analogRead(flexpin0);
+        average1 =  average1 + 0.1*analogRead(flexpin1);
+      }
+      firstroundflag = 0;
+    }
+   //continue with a moving average
+
+    average0 =  0.9*average0 + 0.1*analogRead(flexpin0);
+    average1 =  0.9*average1 + 0.1*analogRead(flexpin1);
+    
+    gtime = millis();
+    acc = gtime-t0;
+    Serial.print("C ");
+    Serial.print(average0);
+    Serial.print(" ");
+    Serial.println(average1);
+    
+  }
+}
+
 void run_measure(){
   
   int m0 = analogRead(flexpin0);
@@ -244,6 +288,7 @@ void setup() {
   pinMode(redledPin,OUTPUT);  
   digitalWrite(ledPin,LOW);
   digitalWrite(redledPin,LOW);
+  pinMode(buttonPin, INPUT);   
 
   // initialize serial communication at 9600 bits per second:
   Serial.begin(9600);
@@ -255,6 +300,11 @@ void setup() {
 // the loop routine runs over and over again forever:
 void loop() {
 
+  buttonState = digitalRead(buttonPin);
+  
+  if (buttonState == LOW) {     
+    run_calibration();
+  } 
   
   if ( Serial.available() )
   {
@@ -263,13 +313,14 @@ void loop() {
     {
       reciveValue = 0;
       set_value = value;
-      value = 0;
+      value = 0;   
       ready = 1;
       if (floatflag == 1)
       {
 	dec = value_float/( pow(10,intLength(value_float) ) );
         floatflag = 0;
       }
+      value_float = 0;
     }   
     else if( ch >= '0' && ch <= '9' )
     {
@@ -305,13 +356,19 @@ void loop() {
       case 'M':
         RunMeasure = 1;
         break;
-      case 'A':
+      case 'A': // Use force array
         if (SensorOrArrayInput == 0)
           SensorOrArrayInput = 1;
         break;
-      case 'a':
+      case 'a': // Use force sensor
         if (SensorOrArrayInput == 1)
           SensorOrArrayInput = 0;
+        break;
+      case 'J': // Dummy fuction, just for debugging float
+        float dummy; 
+        dummy = (float) set_value + dec;
+        Serial.print("Float is ");       
+        Serial.println(dummy);
         break;
       case 'N':
         NoOfRepetions = set_value;

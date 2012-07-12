@@ -45,12 +45,12 @@ ser.write(cstr)
 
 # Write the force data to the Arduino
 for i in range(len(A)):
-	cstr = "E" + str(i)+ ";"
-	#ser.write(cstr) 
-	print cstr
-	cstr = "F"+str(A[i]) + ";"
-	#ser.write(cstr) 
-	print cstr
+    cstr = "E" + str(i)+ ";"
+    ser.write(cstr) 
+    #print cstr
+    cstr = "F"+str(A[i]) + ";"
+    ser.write(cstr) 
+    #print cstr
 
 # Set the filename to the curret date and time + .log
 fpname = strftime("%Y%m%d-%H%M%S")+'.log'
@@ -58,16 +58,19 @@ fpname = strftime("%Y%m%d-%H%M%S")+'.log'
 # Open file for printing
 fp = open(fpname,"w")
 
-#t0 = datetime.now()
+# Start execution of experiment
+cstr = "S" + str(i)+ ";"
+ser.write(cstr) 
+
+# Recive force data
 if (ser.isOpen()):
     line = ser.readline()
-    print line
+    #print line
     while ( line > -1 ):
         line = ser.readline()
         print line
         fp.write(line)
         line = -1
-
 
 else:
     print "Error when opening port"
