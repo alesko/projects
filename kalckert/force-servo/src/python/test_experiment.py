@@ -72,8 +72,8 @@ if (ser.isOpen()):
 else:
     print "Error when opening port"
 
-fp.close()
 
+fp.close()
 ser.close()             # close port
 
 

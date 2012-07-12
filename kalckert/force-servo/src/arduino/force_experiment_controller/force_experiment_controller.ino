@@ -1,9 +1,6 @@
 /*
-  AnalogReadSerial
-  Reads an analog input on pin 0, prints the result to the serial monitor.
-  Attach the center pin of a potentiometer to pin A0, and the outside pins to +5V and ground.
- 
- This example code is in the public domain.
+
+
  */
  
 #include <Servo.h>
@@ -21,10 +18,13 @@ int sendVal = 0;
 int fieldIndex = 0;
 const int NUMBER_OF_FIELDS = 2;
 int value; //[NUMBER_OF_FIELDS];
+float value_float; //[NUMBER_OF_FIELDS];
 int set_value;
 int reciveValue = 0;
 char command;
 int ready = 0;
+int floatflag = 0;
+float dec;
 
 // Variable that the user can change
 int RunExp = 0;
@@ -128,8 +128,11 @@ void run_experiment(){
         Serial.println(ForceArray[i]);
       }
       beep(warningDuration);
-      //run_controller(Duration, ForceArray[i]);
-      run_controller(Duration, -1);
+      // Match sensor of force set from array
+      if( SensorOrArrayInput == 1)
+        run_controller(Duration, ForceArray[i]);
+      else
+        run_controller(Duration, -1);
       delay(PauseDuration);
     }
     delay(PauseDuration);
@@ -206,6 +209,25 @@ void setup_servo()
   
 }
 
+int intLength(int lvalue)
+{
+  int valLen = 0;
+
+  if(lvalue > 9999)
+    valLen = 5;
+  else if(lvalue > 999)
+    valLen = 4;
+  else if(lvalue > 99)
+    valLen = 3;
+  else if(lvalue > 9)
+    valLen = 2;
+  else
+    valLen = 1; 
+  
+  return valLen;
+
+}
+
 // the setup routine runs once when you press reset:
 void setup() {
 
@@ -232,6 +254,7 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
+
   
   if ( Serial.available() )
   {
@@ -242,13 +265,29 @@ void loop() {
       set_value = value;
       value = 0;
       ready = 1;
+      if (floatflag == 1)
+      {
+	dec = value_float/( pow(10,intLength(value_float) ) );
+        floatflag = 0;
+      }
     }   
     else if( ch >= '0' && ch <= '9' )
     {
       if(reciveValue == 1)
       {
-         value = (value*10)+(ch - '0');
+        if (floatflag == 1)
+	  {
+	    value_float = (value_float*10)+(ch - '0');	    
+	  }
+	else
+	  {
+	    value = (value*10)+(ch - '0');
+	  }
       }
+    }
+    else if( ch == '.' )
+    {
+      floatflag = 1;
     }
     else if( ch >= 'A' && ch <= 'Z' ) // Capital letter
     {
@@ -267,7 +306,12 @@ void loop() {
         RunMeasure = 1;
         break;
       case 'A':
-        //Serial.print("i ");
+        if (SensorOrArrayInput == 0)
+          SensorOrArrayInput = 1;
+        break;
+      case 'a':
+        if (SensorOrArrayInput == 1)
+          SensorOrArrayInput = 0;
         break;
       case 'N':
         NoOfRepetions = set_value;
