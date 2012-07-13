@@ -9,17 +9,17 @@
 <grid distance="5" unitdist="mil" unit="mil" style="lines" multiple="1" display="yes" altdistance="2" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="yes"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="yes"/>
 <layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="22" name="bPlace" color="7" fill="1" visible="no" active="yes"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
@@ -84,6 +84,74 @@
 <wire x1="-6.35" y1="32.258" x2="-6.35" y2="43.942" width="0.254" layer="21"/>
 <text x="1.143" y="4.953" size="1.27" layer="1">Licensed under CERN OHL v.1.1</text>
 <text x="1.143" y="7.239" size="1.016" layer="1">Created and designed by Alexander Skoglund</text>
+<polygon width="0.000253125" layer="21">
+<vertex x="0.000834375" y="-0.00201875" curve="9.51254"/>
+<vertex x="0.00115625" y="-0.001853125"/>
+<vertex x="0.00195625" y="-0.002503125"/>
+<vertex x="0.002503125" y="-0.00195625"/>
+<vertex x="0.001853125" y="-0.00115625" curve="18.990829"/>
+<vertex x="0.002128125" y="-0.000490625"/>
+<vertex x="0.00315" y="-0.0003875"/>
+<vertex x="0.00315" y="0.0003875"/>
+<vertex x="0.002128125" y="0.000490625" curve="18.990829"/>
+<vertex x="0.001853125" y="0.00115625"/>
+<vertex x="0.002503125" y="0.00195625"/>
+<vertex x="0.00195625" y="0.002503125"/>
+<vertex x="0.00115625" y="0.001853125" curve="18.990829"/>
+<vertex x="0.000490625" y="0.002128125"/>
+<vertex x="0.0003875" y="0.00315"/>
+<vertex x="-0.0003875" y="0.00315"/>
+<vertex x="-0.000490625" y="0.002128125" curve="18.990829"/>
+<vertex x="-0.00115625" y="0.001853125"/>
+<vertex x="-0.00195625" y="0.002503125"/>
+<vertex x="-0.002503125" y="0.00195625"/>
+<vertex x="-0.001853125" y="0.00115625" curve="18.990829"/>
+<vertex x="-0.002128125" y="0.000490625"/>
+<vertex x="-0.00315" y="0.0003875"/>
+<vertex x="-0.00315" y="-0.0003875"/>
+<vertex x="-0.002128125" y="-0.000490625" curve="18.990829"/>
+<vertex x="-0.001853125" y="-0.00115625"/>
+<vertex x="-0.00195625" y="-0.002503125"/>
+<vertex x="-0.00115625" y="-0.001853125" curve="9.51254"/>
+<vertex x="-0.000834375" y="-0.00201875"/>
+<vertex x="-0.000378125" y="-0.000915625" curve="-67.441372"/>
+<vertex x="-0.000990625" y="0" curve="-247.560878"/>
+<vertex x="0.000378125" y="-0.000915625"/>
+</polygon>
+<polygon width="0.000253125" layer="21">
+<vertex x="0.000834375" y="-0.00201875" curve="9.51254"/>
+<vertex x="0.00115625" y="-0.001853125"/>
+<vertex x="0.00195625" y="-0.002503125"/>
+<vertex x="0.002503125" y="-0.00195625"/>
+<vertex x="0.001853125" y="-0.00115625" curve="18.990829"/>
+<vertex x="0.002128125" y="-0.000490625"/>
+<vertex x="0.00315" y="-0.0003875"/>
+<vertex x="0.00315" y="0.0003875"/>
+<vertex x="0.002128125" y="0.000490625" curve="18.990829"/>
+<vertex x="0.001853125" y="0.00115625"/>
+<vertex x="0.002503125" y="0.00195625"/>
+<vertex x="0.00195625" y="0.002503125"/>
+<vertex x="0.00115625" y="0.001853125" curve="18.990829"/>
+<vertex x="0.000490625" y="0.002128125"/>
+<vertex x="0.0003875" y="0.00315"/>
+<vertex x="-0.0003875" y="0.00315"/>
+<vertex x="-0.000490625" y="0.002128125" curve="18.990829"/>
+<vertex x="-0.00115625" y="0.001853125"/>
+<vertex x="-0.00195625" y="0.002503125"/>
+<vertex x="-0.002503125" y="0.00195625"/>
+<vertex x="-0.001853125" y="0.00115625" curve="18.990829"/>
+<vertex x="-0.002128125" y="0.000490625"/>
+<vertex x="-0.00315" y="0.0003875"/>
+<vertex x="-0.00315" y="-0.0003875"/>
+<vertex x="-0.002128125" y="-0.000490625" curve="18.990829"/>
+<vertex x="-0.001853125" y="-0.00115625"/>
+<vertex x="-0.00195625" y="-0.002503125"/>
+<vertex x="-0.00115625" y="-0.001853125" curve="9.51254"/>
+<vertex x="-0.000834375" y="-0.00201875"/>
+<vertex x="-0.000378125" y="-0.000915625" curve="-67.441372"/>
+<vertex x="-0.000990625" y="0" curve="-247.560878"/>
+<vertex x="0.000378125" y="-0.000915625"/>
+</polygon>
 </plain>
 <libraries>
 <library name="pinhead">
@@ -3301,6 +3369,50 @@ design rules under a new name.</description>
 <contactref element="POWERPIN" pad="1"/>
 <contactref element="C6" pad="1"/>
 <wire x1="27.94" y1="2.54" x2="23.749" y2="2.54" width="0.254" layer="1"/>
+</signal>
+<signal name="N$11">
+<wire x1="0.000834375" y1="-0.00201875" x2="0.00115625" y2="-0.001853125" width="0.000253125" layer="1" curve="9.51254"/>
+<wire x1="0.001853125" y1="-0.00115625" x2="0.002128125" y2="-0.000490625" width="0.000253125" layer="1" curve="18.990829"/>
+<wire x1="0.002128125" y1="0.000490625" x2="0.001853125" y2="0.00115625" width="0.000253125" layer="1" curve="18.990829"/>
+<wire x1="0.00115625" y1="0.001853125" x2="0.000490625" y2="0.002128125" width="0.000253125" layer="1" curve="18.990829"/>
+<wire x1="-0.000490625" y1="0.002128125" x2="-0.00115625" y2="0.001853125" width="0.000253125" layer="1" curve="18.990829"/>
+<wire x1="-0.001853125" y1="0.00115625" x2="-0.002128125" y2="0.000490625" width="0.000253125" layer="1" curve="18.990829"/>
+<wire x1="-0.002128125" y1="-0.000490625" x2="-0.001853125" y2="-0.00115625" width="0.000253125" layer="1" curve="18.990829"/>
+<wire x1="-0.00115625" y1="-0.001853125" x2="-0.000834375" y2="-0.00201875" width="0.000253125" layer="1" curve="9.51254"/>
+<wire x1="-0.000378125" y1="-0.000915625" x2="-0.000990625" y2="0" width="0.000253125" layer="1" curve="-67.441372"/>
+<wire x1="-0.000990625" y1="0" x2="0.000378125" y2="-0.000915625" width="0.000253125" layer="1" curve="-247.560878"/>
+<wire x1="0.000834375" y1="-0.00201875" x2="0.00115625" y2="-0.001853125" width="0.000253125" layer="1" curve="9.51254"/>
+<wire x1="0.00115625" y1="-0.001853125" x2="0.00195625" y2="-0.002503125" width="0.000253125" layer="1"/>
+<wire x1="0.00195625" y1="-0.002503125" x2="0.002503125" y2="-0.00195625" width="0.000253125" layer="1"/>
+<wire x1="0.002503125" y1="-0.00195625" x2="0.001853125" y2="-0.00115625" width="0.000253125" layer="1"/>
+<wire x1="0.001853125" y1="-0.00115625" x2="0.002128125" y2="-0.000490625" width="0.000253125" layer="1" curve="18.990829"/>
+<wire x1="0.002128125" y1="-0.000490625" x2="0.00315" y2="-0.0003875" width="0.000253125" layer="1"/>
+<wire x1="0.00315" y1="-0.0003875" x2="0.00315" y2="0.0003875" width="0.000253125" layer="1"/>
+<wire x1="0.00315" y1="0.0003875" x2="0.002128125" y2="0.000490625" width="0.000253125" layer="1"/>
+<wire x1="0.002128125" y1="0.000490625" x2="0.001853125" y2="0.00115625" width="0.000253125" layer="1" curve="18.990829"/>
+<wire x1="0.001853125" y1="0.00115625" x2="0.002503125" y2="0.00195625" width="0.000253125" layer="1"/>
+<wire x1="0.002503125" y1="0.00195625" x2="0.00195625" y2="0.002503125" width="0.000253125" layer="1"/>
+<wire x1="0.00195625" y1="0.002503125" x2="0.00115625" y2="0.001853125" width="0.000253125" layer="1"/>
+<wire x1="0.00115625" y1="0.001853125" x2="0.000490625" y2="0.002128125" width="0.000253125" layer="1" curve="18.990829"/>
+<wire x1="0.000490625" y1="0.002128125" x2="0.0003875" y2="0.00315" width="0.000253125" layer="1"/>
+<wire x1="0.0003875" y1="0.00315" x2="-0.0003875" y2="0.00315" width="0.000253125" layer="1"/>
+<wire x1="-0.0003875" y1="0.00315" x2="-0.000490625" y2="0.002128125" width="0.000253125" layer="1"/>
+<wire x1="-0.000490625" y1="0.002128125" x2="-0.00115625" y2="0.001853125" width="0.000253125" layer="1" curve="18.990829"/>
+<wire x1="-0.00115625" y1="0.001853125" x2="-0.00195625" y2="0.002503125" width="0.000253125" layer="1"/>
+<wire x1="-0.00195625" y1="0.002503125" x2="-0.002503125" y2="0.00195625" width="0.000253125" layer="1"/>
+<wire x1="-0.002503125" y1="0.00195625" x2="-0.001853125" y2="0.00115625" width="0.000253125" layer="1"/>
+<wire x1="-0.001853125" y1="0.00115625" x2="-0.002128125" y2="0.000490625" width="0.000253125" layer="1" curve="18.990829"/>
+<wire x1="-0.002128125" y1="0.000490625" x2="-0.00315" y2="0.0003875" width="0.000253125" layer="1"/>
+<wire x1="-0.00315" y1="0.0003875" x2="-0.00315" y2="-0.0003875" width="0.000253125" layer="1"/>
+<wire x1="-0.00315" y1="-0.0003875" x2="-0.002128125" y2="-0.000490625" width="0.000253125" layer="1"/>
+<wire x1="-0.002128125" y1="-0.000490625" x2="-0.001853125" y2="-0.00115625" width="0.000253125" layer="1" curve="18.990829"/>
+<wire x1="-0.002503125" y1="-0.00195625" x2="-0.00195625" y2="-0.002503125" width="0.000253125" layer="1"/>
+<wire x1="-0.00195625" y1="-0.002503125" x2="-0.00115625" y2="-0.001853125" width="0.000253125" layer="1"/>
+<wire x1="-0.00115625" y1="-0.001853125" x2="-0.000834375" y2="-0.00201875" width="0.000253125" layer="1" curve="9.51254"/>
+<wire x1="-0.000834375" y1="-0.00201875" x2="-0.000378125" y2="-0.000915625" width="0.000253125" layer="1"/>
+<wire x1="-0.000378125" y1="-0.000915625" x2="-0.000990625" y2="0" width="0.000253125" layer="1" curve="-67.441372"/>
+<wire x1="-0.000990625" y1="0" x2="0.000378125" y2="-0.000915625" width="0.000253125" layer="1" curve="-247.560878"/>
+<wire x1="0.000378125" y1="-0.000915625" x2="0.000834375" y2="-0.00201875" width="0.000253125" layer="1"/>
 </signal>
 </signals>
 </board>

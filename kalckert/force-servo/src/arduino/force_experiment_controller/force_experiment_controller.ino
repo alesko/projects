@@ -16,7 +16,7 @@ int speakerPin = 4; // 7
 int servoPin = 9;
 int ledPin = 7; // 5
 int redledPin = 6; // 4
-int buttonPin = 0;
+int buttonPin = 3;
 
 int sendVal = 0;
 int fieldIndex = 0;
@@ -35,6 +35,7 @@ int buttonState = 0;         // variable for reading the pushbutton status
 // Variable that the user can change
 int RunExp = 0;
 int RunMeasure = 0;
+int RunCal = 0;
 int SensorOrArrayInput = 0; // 0 is sensor
 int NoOfRepetions = 1;
 int Duration = 3000;
@@ -154,7 +155,19 @@ void run_calibration(){
   int average0, average1;
   int iter=10;
   
-  while( acc < Duration)
+  /*
+  int a0 = analogRead(flexpin0);
+  int a1 = analogRead(flexpin1);
+  // Dont start until we have some value
+  while( a0 < 5 || a1 < 5 )
+  {  
+    a0 = analogRead(flexpin0);
+    a1 = analogRead(flexpin1);
+    delay(500); // Avoid too much error
+  }*/
+  
+  //while( acc < Duration)
+  for( int i = 0; i < 150 ; i++)
   {
     // start with 10 measurments
     if ( firstroundflag == 1)
@@ -175,12 +188,13 @@ void run_calibration(){
     
     gtime = millis();
     acc = gtime-t0;
-    Serial.print("C ");
+    //Serial.print("C ");
     Serial.print(average0);
     Serial.print(" ");
     Serial.println(average1);
-    
+    delay(20);
   }
+  Serial.println(" ");
 }
 
 void run_measure(){
@@ -207,7 +221,7 @@ void setup_servo()
   //Serial.begin(9600);
   
   // Find the min position
-  Serial.println("Start, go to min pos");
+  //Serial.println("Start, go to min pos");
   pos_set = 30;
   myservo.write(pos_set);
   delay(1500);  
@@ -221,9 +235,9 @@ void setup_servo()
      pos_in = analogRead(pospin);
   }
   pos_out_min = pos_set;
-  Serial.print("Pos out min is: ");
-  Serial.println(pos_out_min);
-  Serial.println("Go to max pos");
+  //Serial.print("Pos out min is: ");
+  //Serial.println(pos_out_min);
+  //Serial.println("Go to max pos");
   
   // Find the max position
   pos_set = 160;
@@ -239,16 +253,16 @@ void setup_servo()
      pos_in = analogRead(pospin);
   }
   pos_out_max = pos_set;
-  Serial.print("Pos out max is: ");
-  Serial.println(pos_out_max);
+  //Serial.print("Pos out max is: ");
+  //Serial.println(pos_out_max);
   
   int val=(pos_in_max-pos_in_min)/2+pos_in_min;
   pos_set = map(val,pos_in_min,pos_in_max,pos_out_min,pos_out_max);
-  Serial.print("Pos_set is: ");
-  Serial.println(pos_set);
+  //Serial.print("Pos_set is: ");
+  //Serial.println(pos_set);
   myservo.write(pos_set);
   delay(1500);
-  Serial.println("Ready");
+  //Serial.println("Ready");
   gtime = millis();
   
 }
@@ -300,11 +314,11 @@ void setup() {
 // the loop routine runs over and over again forever:
 void loop() {
 
-  buttonState = digitalRead(buttonPin);
+  /*buttonState = digitalRead(buttonPin);
   
-  if (buttonState == LOW) {     
+  if (buttonState == HIGH) {     
     run_calibration();
-  } 
+  } */
   
   if ( Serial.available() )
   {
@@ -369,6 +383,9 @@ void loop() {
         dummy = (float) set_value + dec;
         Serial.print("Float is ");       
         Serial.println(dummy);
+        break;
+      case 'C': // Dummy fuction, just for debugging float
+        RunCal = 1;
         break;
       case 'N':
         NoOfRepetions = set_value;
@@ -446,6 +463,12 @@ void loop() {
     run_measure();
     RunMeasure = 0;
   }
+  if( RunCal == 1)
+  {
+    run_calibration();
+    RunCal = 0;
+  }
+  
   delay(1);        // delay in between reads for stability
   
 }
