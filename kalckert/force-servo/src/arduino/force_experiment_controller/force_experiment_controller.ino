@@ -86,8 +86,8 @@ void run_controller(int duration, int force_des)
     int e_tau = tau_des-tau;
     
     float q_dot = (float)(pos_old - pos_in)/(float)dt;
-    float k_d = 1;
-    float k_p = 0.01;
+    float k_d = 2.2; //1.7;
+    float k_p = 0.0035;
     float e_tau_f = (float)e_tau;
     float u = 3.3*k_p*e_tau_f-k_d*q_dot;
     

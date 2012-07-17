@@ -6,7 +6,7 @@ import time
 # XXX is the port name on POSIX system (MacOSX, Linux)
 ser = serial.Serial('/dev/tty.usbmodemfd3331', 9600)
 
-rounds = [1,2,3,4,5]
+#rounds = [1,2,3,4,5]
 
 #weights = [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, .50  ]
 
@@ -23,22 +23,25 @@ v1_array = [];
 
 if (ser.isOpen()):
     ser.write('C;')
-line = ser.readline()
-print line
-separator = line.index(' ')
-while (separator > 0 ):   
-    v0 = int(line[:separator])
-    print v0
-    v1 = int(line[separator+1:])
-    print v1
-    v0_array.append(v0)
-    v1_array.append(v1)
+    line = ser.readline()
+    print line
+    separator = line.index(' ')
+    while (separator > 0 ):   
+        v0 = int(line[:separator])
+        v1 = int(line[separator+1:])
+        #print v0.str() + ' ' + v1.str()
+        v0_array.append(v0)
+        v1_array.append(v1)
+        line = ser.readline()
+        separator = line.index(' ')
 
-average0 = float(sum(v0_array)) / len(v0_array)
-average1 = float(sum(v0_array)) / len(v0_array)
+    average0 = float(sum(v0_array)) / len(v0_array)
+    average1 = float(sum(v1_array)) / len(v1_array)
     
-print average0
-print average1
+    print average0
+    print average1
+
+    ser.close()
 
 # while ( line > -1 ):
 #        line = ser.readline()
