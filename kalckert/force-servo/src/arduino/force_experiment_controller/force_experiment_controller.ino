@@ -1,5 +1,20 @@
 /*
+    
+    Force contoller for a sevo motor.
+    Copyright (C) 2012 Alexander Skoglund, Karolinska Institute
+    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  */
  
@@ -31,6 +46,13 @@ int floatflag = 0;
 float dec;
 int buttonState = 0;         // variable for reading the pushbutton status
 
+// Software set min and max position
+//int pos_out_max_s;
+//int pos_out_min_s;
+int pos_in_min;
+int pos_in_max;
+int pos_in_min_s;
+int pos_in_max_s;
 
 // Variable that the user can change
 int RunExp = 0;
@@ -57,7 +79,10 @@ unsigned long dt;
 
 void run_controller(int duration, int force_des)
 {
+  myservo.attach(servoPin);  // attaches the servo on pin 9 to the servo object
   digitalWrite(redledPin,LOW);
+  digitalWrite(ledPin ,HIGH);
+  
   gtime = millis();
   pos_in = analogRead(pospin);
   
@@ -86,27 +111,36 @@ void run_controller(int duration, int force_des)
     int e_tau = tau_des-tau;
     
     float q_dot = (float)(pos_old - pos_in)/(float)dt;
-    float k_d = 2.2; //1.7;
-    float k_p = 0.0035;
+    float k_d = 0.2; //1.7;
+    float k_p = 0.018; // 0.012
     float e_tau_f = (float)e_tau;
     float u = 3.3*k_p*e_tau_f-k_d*q_dot;
     
-    pos_set = pos_set + (int)u;
-    myservo.write(pos_set);
-    if( (duration-acc) < 500 )
+    int old_pos_set = pos_set;
+    if( u > 0.5 | u < -0.5 )
+    {
+      pos_set = pos_set + (int)u;
+      myservo.write(pos_set);
+    }
+    /*if( (duration-acc) < 500 )
     { 
       digitalWrite(ledPin ,HIGH);
-    }
+    }*/
     Serial.print(gtime);
     Serial.print(" ");
     Serial.print(tau_des);
     Serial.print(" ");
-    Serial.println(tau);
+    Serial.print(tau);
+    Serial.print(" ");
+    Serial.println(u);
+    
+    
     delay(10);
   }
   digitalWrite(ledPin,LOW);
   digitalWrite(redledPin,HIGH);
-
+  myservo.detach();  // attaches the servo on pin 9 to the servo object
+  
 }
 
 void beep(int dur)
@@ -212,8 +246,9 @@ void setup_servo()
   int pos_out_max;
   int pos_set = 30;
   int pos_in = 0;
-  int pos_in_min = 1000;
-  int pos_in_max = -1000;
+  
+  pos_in_min = 1000;
+  pos_in_max = -1000;
   
   myservo.attach(servoPin);  // attaches the servo on pin 9 to the servo object
   //int counter = 0;
@@ -221,7 +256,7 @@ void setup_servo()
   //Serial.begin(9600);
   
   // Find the min position
-  //Serial.println("Start, go to min pos");
+  Serial.println("Start, go to min pos");
   pos_set = 30;
   myservo.write(pos_set);
   delay(1500);  
@@ -234,10 +269,11 @@ void setup_servo()
      delay(200);
      pos_in = analogRead(pospin);
   }
+  pos_in_min = pos_in;
   pos_out_min = pos_set;
-  //Serial.print("Pos out min is: ");
-  //Serial.println(pos_out_min);
-  //Serial.println("Go to max pos");
+  Serial.print("Pos in min is: ");
+  Serial.println(pos_in_min);
+  Serial.println("Go to max pos");
   
   // Find the max position
   pos_set = 160;
@@ -252,18 +288,39 @@ void setup_servo()
      delay(200);
      pos_in = analogRead(pospin);
   }
+  pos_in_max = pos_in;
   pos_out_max = pos_set;
-  //Serial.print("Pos out max is: ");
-  //Serial.println(pos_out_max);
+  Serial.print("Pos in max is: ");
+  Serial.println(pos_in_max);
   
   int val=(pos_in_max-pos_in_min)/2+pos_in_min;
   pos_set = map(val,pos_in_min,pos_in_max,pos_out_min,pos_out_max);
+  
+  // Set Range limits to 20% of full
+  double d = sq((double)pos_in_max - (double)pos_in_min);
+  int range=(int) sqrt(d); ///2+pos_in_min;
+  Serial.print("range: ");
+  Serial.println(range);
+  int mid = range/2+pos_in_max;
+   Serial.print("mid: ");
+  Serial.println(mid);
+  range = range*0.5; 
+  Serial.print("range: ");
+  Serial.println(range);
+  pos_in_max_s = mid+range; 
+  pos_in_min_s = mid-range;
+  Serial.print("Pos in max soft is: ");
+  Serial.println(pos_in_max_s);
+  Serial.print("Pos in min soft is: ");
+  Serial.println(pos_in_min_s);
+  
   //Serial.print("Pos_set is: ");
   //Serial.println(pos_set);
   myservo.write(pos_set);
   delay(1500);
   //Serial.println("Ready");
   gtime = millis();
+  myservo.detach();  // attaches the servo on pin 9 to the servo object
   
 }
 
