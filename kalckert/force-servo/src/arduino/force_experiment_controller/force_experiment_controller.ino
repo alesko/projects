@@ -1,3 +1,4 @@
+
 /*
     
     Force contoller for a sevo motor.
@@ -17,8 +18,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  */
- 
+#include <forceservoclass.h>
+#include <cominterfaceclass.h>
 #include <Servo.h>
+#include <Serial.h>
+
 
 // Analog in pins
 int flexpin1 = 1;  // analog pin used to connect the flexiforce
@@ -29,26 +33,17 @@ int sliderPin = 3; // analog pin used to connect the slider potentiometer
 // Digital IO pins
 int speakerPin = 4; // 7
 int servoPin = 9;
-int ledPin = 7; // 5
+int greenledPin = 7; // 5
 int redledPin = 6; // 4
 int buttonPin = 3;
 
-int sendVal = 0;
 int fieldIndex = 0;
-const int NUMBER_OF_FIELDS = 2;
-int value; //[NUMBER_OF_FIELDS];
+int value_int; //[NUMBER_OF_FIELDS];
 float value_float; //[NUMBER_OF_FIELDS];
-int set_value;
-int reciveValue = 0;
 char command;
-int ready = 0;
-int floatflag = 0;
-float dec;
-int buttonState = 0;         // variable for reading the pushbutton status
+int g_READY = 0;
 
 // Software set min and max position
-//int pos_out_max_s;
-//int pos_out_min_s;
 int pos_in_min;
 int pos_in_max;
 int pos_in_min_s;
@@ -58,7 +53,7 @@ int pos_in_max_s;
 int RunExp = 0;
 int RunMeasure = 0;
 int RunCal = 0;
-int SensorOrArrayInput = 0; // 0 is sensor
+int SensorOrArrayInput = 1; // 0 is sensor
 int NoOfRepetions = 1;
 int Duration = 3000;
 int Delay = 0;
@@ -66,8 +61,12 @@ int PauseDuration = 1500;
 int ElemetIndex = 0;
 int ForceInElement = 0;
 int NumberOfForceElements = 24;
-float ForceArray[128];
-int Debug = 0;
+int ForceArray[128];
+int Debug = 1;
+
+ComInterfaceClass comint;
+ForceServoClass fc(servoPin, pospin, flexpin1, 10 );
+
 
 // Contoller parameters
 Servo myservo;  // create servo object to control a servo 
@@ -76,12 +75,13 @@ int pos_in;
 unsigned long gtime;
 unsigned long gtime_old;
 unsigned long dt;
+float k_p, k_d;
 
 void run_controller(int duration, int force_des)
 {
   myservo.attach(servoPin);  // attaches the servo on pin 9 to the servo object
   digitalWrite(redledPin,LOW);
-  digitalWrite(ledPin ,HIGH);
+  digitalWrite(greenledPin ,HIGH);
   
   gtime = millis();
   pos_in = analogRead(pospin);
@@ -111,21 +111,30 @@ void run_controller(int duration, int force_des)
     int e_tau = tau_des-tau;
     
     float q_dot = (float)(pos_old - pos_in)/(float)dt;
-    float k_d = 0.2; //1.7;
-    float k_p = 0.018; // 0.012
     float e_tau_f = (float)e_tau;
     float u = 3.3*k_p*e_tau_f-k_d*q_dot;
     
     int old_pos_set = pos_set;
+    if(  pos_in > pos_in_max_s)
+    {
+      Serial.println("Over max");
+      u = 1;
+    }
+    if(  pos_in < pos_in_min_s)
+    {
+      Serial.println("Under min");
+      u = -1;
+    }
+    if( u > 10 )
+      u= 10;
+    if( u < -10 )
+      u= -10;
     if( u > 0.5 | u < -0.5 )
     {
       pos_set = pos_set + (int)u;
       myservo.write(pos_set);
     }
-    /*if( (duration-acc) < 500 )
-    { 
-      digitalWrite(ledPin ,HIGH);
-    }*/
+
     Serial.print(gtime);
     Serial.print(" ");
     Serial.print(tau_des);
@@ -137,7 +146,7 @@ void run_controller(int duration, int force_des)
     
     delay(10);
   }
-  digitalWrite(ledPin,LOW);
+  digitalWrite(greenledPin,LOW);
   digitalWrite(redledPin,HIGH);
   myservo.detach();  // attaches the servo on pin 9 to the servo object
   
@@ -170,10 +179,34 @@ void run_experiment(){
       }
       beep(warningDuration);
       // Match sensor of force set from array
-      if( SensorOrArrayInput == 1)
-        run_controller(Duration, ForceArray[i]);
-      else
-        run_controller(Duration, -1);
+
+      Serial.print("Force is ");
+      Serial.println(ForceArray[i]);
+        
+      fc.attach_servo();
+      digitalWrite(redledPin,LOW);
+      digitalWrite(greenledPin ,HIGH);
+      
+      unsigned long t0=millis();
+      unsigned long acc = 0;
+      while( acc < Duration)
+      {    
+        acc = millis() - t0;
+        if( SensorOrArrayInput == 1)
+        {
+          fc.run_controller(ForceArray[i]);
+        }
+        else
+        {
+          int tau_des = analogRead(flexpin0);
+          fc.run_controller(tau_des);
+        }
+        delay(10);
+      }
+      digitalWrite(greenledPin,LOW);
+      digitalWrite(redledPin,HIGH);
+      fc.detach_servo();
+        
       delay(PauseDuration);
     }
     delay(PauseDuration);
@@ -189,16 +222,6 @@ void run_calibration(){
   int average0, average1;
   int iter=10;
   
-  /*
-  int a0 = analogRead(flexpin0);
-  int a1 = analogRead(flexpin1);
-  // Dont start until we have some value
-  while( a0 < 5 || a1 < 5 )
-  {  
-    a0 = analogRead(flexpin0);
-    a1 = analogRead(flexpin1);
-    delay(500); // Avoid too much error
-  }*/
   
   //while( acc < Duration)
   for( int i = 0; i < 150 ; i++)
@@ -256,7 +279,7 @@ void setup_servo()
   //Serial.begin(9600);
   
   // Find the min position
-  Serial.println("Start, go to min pos");
+  //Serial.println("Start, go to min pos");
   pos_set = 30;
   myservo.write(pos_set);
   delay(1500);  
@@ -271,9 +294,9 @@ void setup_servo()
   }
   pos_in_min = pos_in;
   pos_out_min = pos_set;
-  Serial.print("Pos in min is: ");
-  Serial.println(pos_in_min);
-  Serial.println("Go to max pos");
+  //Serial.print("Pos in min is: ");
+  //Serial.println(pos_in_min);
+  //Serial.println("Go to max pos");
   
   // Find the max position
   pos_set = 160;
@@ -290,8 +313,8 @@ void setup_servo()
   }
   pos_in_max = pos_in;
   pos_out_max = pos_set;
-  Serial.print("Pos in max is: ");
-  Serial.println(pos_in_max);
+  //Serial.print("Pos in max is: ");
+  //Serial.println(pos_in_max);
   
   int val=(pos_in_max-pos_in_min)/2+pos_in_min;
   pos_set = map(val,pos_in_min,pos_in_max,pos_out_min,pos_out_max);
@@ -299,14 +322,14 @@ void setup_servo()
   // Set Range limits to 20% of full
   double d = sq((double)pos_in_max - (double)pos_in_min);
   int range=(int) sqrt(d); ///2+pos_in_min;
-  Serial.print("range: ");
-  Serial.println(range);
+  //Serial.print("range: ");
+  //Serial.println(range);
   int mid = range/2+pos_in_max;
-   Serial.print("mid: ");
-  Serial.println(mid);
-  range = range*0.5; 
-  Serial.print("range: ");
-  Serial.println(range);
+  //Serial.print("mid: ");
+  //Serial.println(mid);
+  range = range*0.1; 
+  //Serial.print("range: ");
+  //Serial.println(range);
   pos_in_max_s = mid+range; 
   pos_in_min_s = mid-range;
   Serial.print("Pos in max soft is: ");
@@ -318,108 +341,61 @@ void setup_servo()
   //Serial.println(pos_set);
   myservo.write(pos_set);
   delay(1500);
-  //Serial.println("Ready");
+  //Serial.println("g_READY");
   gtime = millis();
   myservo.detach();  // attaches the servo on pin 9 to the servo object
-  
+
+  // Init gains  
+  k_d = 0.00; //1.7;
+  k_p = 0.012; //0.012; //0.018; // 0.012
 }
 
-int intLength(int lvalue)
-{
-  int valLen = 0;
-
-  if(lvalue > 9999)
-    valLen = 5;
-  else if(lvalue > 999)
-    valLen = 4;
-  else if(lvalue > 99)
-    valLen = 3;
-  else if(lvalue > 9)
-    valLen = 2;
-  else
-    valLen = 1; 
-  
-  return valLen;
-
-}
 
 // the setup routine runs once when you press reset:
 void setup() {
 
+  Serial.begin(9600);
+  //Serial.println("setup");
   for(int i = 0; i < 128; i++)
-  {
     ForceArray[i] = 0;  
-  }
+
+  // Remove this later...
   for(int i = 0; i < NumberOfForceElements; i++)
-  {
-    ForceArray[i] = i * 0.1;  
-  }
+    ForceArray[i] = i * 3;  
+
+  
   pinMode(speakerPin,OUTPUT);
-  pinMode(ledPin,OUTPUT);
+  pinMode(greenledPin,OUTPUT);
   pinMode(redledPin,OUTPUT);  
-  digitalWrite(ledPin,LOW);
+  digitalWrite(greenledPin,LOW);
   digitalWrite(redledPin,LOW);
   pinMode(buttonPin, INPUT);   
 
   // initialize serial communication at 9600 bits per second:
-  Serial.begin(9600);
-  reciveValue = 0;
+  //Serial.begin(9600);
   // Initialze the controller
-  setup_servo();
+  //setup_servo();
+  fc.init();
 }
 
 // the loop routine runs over and over again forever:
 void loop() {
-
-  /*buttonState = digitalRead(buttonPin);
   
-  if (buttonState == HIGH) {     
-    run_calibration();
-  } */
-  
-  if ( Serial.available() )
+  float dummy;
+  g_READY = comint.ReadCommand();
+  if( g_READY !=  0)
   {
-    char ch = Serial.read();
-    if( ch == ';')
-    {
-      reciveValue = 0;
-      set_value = value;
-      value = 0;   
-      ready = 1;
-      if (floatflag == 1)
-      {
-	dec = value_float/( pow(10,intLength(value_float) ) );
-        floatflag = 0;
-      }
-      value_float = 0;
-    }   
-    else if( ch >= '0' && ch <= '9' )
-    {
-      if(reciveValue == 1)
-      {
-        if (floatflag == 1)
-	  {
-	    value_float = (value_float*10)+(ch - '0');	    
-	  }
-	else
-	  {
-	    value = (value*10)+(ch - '0');
-	  }
-      }
-    }
-    else if( ch == '.' )
-    {
-      floatflag = 1;
-    }
-    else if( ch >= 'A' && ch <= 'Z' ) // Capital letter
-    {
-      command = ch;
-      reciveValue = 1;
-    }
+    command = comint.getChar();
+    value_int = comint.getInt();
+    value_float = comint.getDouble();
+    Serial.println(command);
   }
-  if( ready ==  1)
+  //Serial.println("loop");
+  
+  
+  if( g_READY ==  1)
   {
-    ready = 0;
+    g_READY = 0;
     switch (command){
       case 'S':
         RunExp = 1;
@@ -436,8 +412,8 @@ void loop() {
           SensorOrArrayInput = 0;
         break;
       case 'J': // Dummy fuction, just for debugging float
-        float dummy; 
-        dummy = (float) set_value + dec;
+         //dummy; 
+        //dummy = (float) set_value + dec;
         Serial.print("Float is ");       
         Serial.println(dummy);
         break;
@@ -445,7 +421,7 @@ void loop() {
         RunCal = 1;
         break;
       case 'N':
-        NoOfRepetions = set_value;
+        NoOfRepetions = value_int; //set_value;
         if( 1 == Debug)
         {
           Serial.print("NoOfRepetions is ");
@@ -453,7 +429,7 @@ void loop() {
         }
         break;
       case 'P':
-        PauseDuration = set_value;
+        PauseDuration = value_int; //set_value;
         if( 1 == Debug)
         {
           Serial.print("PauseDuration is ");
@@ -461,7 +437,7 @@ void loop() {
         }
         break;
       case 'D':
-        Duration = set_value;
+        Duration = value_int; //set_value;
         if( 1 == Debug)
         {
           Serial.print("Duration is ");
@@ -469,7 +445,7 @@ void loop() {
         }
         break;
       case 'L':
-        Delay = set_value;
+        Delay = value_int; //set_value;
         if( 1 == Debug)
         {
           Serial.print("Delay is ");
@@ -477,7 +453,7 @@ void loop() {
         }
         break;
       case 'E':
-        ElemetIndex = set_value;
+        ElemetIndex = value_int; //set_value;
         if( 1 == Debug)
         {
           Serial.print("ElemetIndex is ");
@@ -485,7 +461,8 @@ void loop() {
         }
         break;
       case 'F':
-        ForceInElement = set_value;
+        ForceInElement = value_int; //set_value;
+        ForceArray[ElemetIndex] = ForceInElement;
         if( 1 == Debug)
         {
           Serial.print("ForceInElement is ");
@@ -493,7 +470,7 @@ void loop() {
         }
         break;
       case 'I':
-        NumberOfForceElements = set_value;
+        NumberOfForceElements = value_int; //set_value;
         if( 1 == Debug)
         {
           Serial.print("NumberOfForceElements is ");
@@ -503,6 +480,22 @@ void loop() {
       case 'Q':
         Debug = 1;
         Serial.println("Debugging info is turned on");
+        break;
+      case 'p':
+        k_p = (float) value_int + value_float; //set_value;
+        if( 1 == Debug)
+        {
+          Serial.print("k_p is");
+          Serial.println(k_p);
+        }
+        break;
+     case 'd':
+        k_d = (float) value_int + value_float; //set_value;
+        if( 1 == Debug)
+        {
+          Serial.print("k_d is");
+          Serial.println(k_d);
+        }
         break;
       case 'q':
         Debug = 0;
