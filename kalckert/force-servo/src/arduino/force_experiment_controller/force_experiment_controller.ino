@@ -18,7 +18,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  */
-#include <forceservoclass.h>
+//#include <forceservoclass.h>
 #include <cominterfaceclass.h>
 #include <Servo.h>
 #include <Serial.h>
@@ -65,8 +65,12 @@ int ForceArray[128];
 int Debug = 1;
 
 ComInterfaceClass comint;
-ForceServoClass fc(servoPin, pospin, flexpin1, 10 );
+//ForceServoClass fc(servoPin, pospin, flexpin1, 10 );
 
+// The "dynamic" arrays for force position correspondence
+int sensor_array[20];
+int position_array[20];
+int size_array = 0;
 
 // Contoller parameters
 Servo myservo;  // create servo object to control a servo 
@@ -183,34 +187,158 @@ void run_experiment(){
       Serial.print("Force is ");
       Serial.println(ForceArray[i]);
         
-      fc.attach_servo();
+      //fc.attach_servo();
+      myservo.attach(servoPin);  // attaches the servo on pin 9 to the servo object
       digitalWrite(redledPin,LOW);
       digitalWrite(greenledPin ,HIGH);
       
       unsigned long t0=millis();
       unsigned long acc = 0;
+      int pos = force2pos(ForceArray[i]);
+      
       while( acc < Duration)
       {    
         acc = millis() - t0;
         if( SensorOrArrayInput == 1)
         {
-          fc.run_controller(ForceArray[i]);
+          //fc.run_controller(ForceArray[i]);
+          
+          
+          Serial.print("Force is ");
+          Serial.print(ForceArray[i]);
+          Serial.print("  Pos is ");
+          Serial.println(pos);
+          myservo.write(pos);
+         
         }
         else
         {
           int tau_des = analogRead(flexpin0);
-          fc.run_controller(tau_des);
+          //fc.run_controller(tau_des);
         }
         delay(10);
       }
       digitalWrite(greenledPin,LOW);
       digitalWrite(redledPin,HIGH);
-      fc.detach_servo();
-        
+      //fc.detach_servo();
+      myservo.detach();  // detaches the servo on pin 9 to the servo object
       delay(PauseDuration);
     }
     delay(PauseDuration);
   }
+}
+
+void new_calibration(){
+  myservo.attach(servoPin);  // attaches the servo on pin 9 to the servo object
+  
+  int start_set = 30;
+  int go_to_pos;
+  myservo.write(start_set);
+  
+  int tau = analogRead(flexpin1);
+  int i = 0;
+  // Make contact
+  while( tau < 10) // Prevent noise
+  {
+    //Serial.print("In while( tau < 1): ");
+    go_to_pos = start_set+i;
+    //Serial.print(go_to_pos);
+    myservo.write(go_to_pos); 
+    tau = analogRead(flexpin1);
+    //Serial.print("  ");
+    //Serial.println(tau);
+    delay(15);
+    i++;
+  }
+  // Retract 5 steps, should be enough
+  go_to_pos = go_to_pos -5;
+  start_set = go_to_pos;
+  myservo.write(go_to_pos);
+  delay(150); // Wait for servo
+  
+  int stauration = 1023; // Sensor is saturated
+  int margin = 50;      // Arbitrary number, derived empirically
+  
+  int mean_tau = 0;
+  
+  long tau_acc = 0;
+  i = 0;
+  int k = 0;
+  tau = analogRead(flexpin1);
+  while( tau < (stauration - margin) )
+  {
+    Serial.print("In tau < (stauration - margin): ");
+    go_to_pos = start_set+i;
+    myservo.write(go_to_pos);
+    Serial.print(go_to_pos);
+    for(int j =0; j < 999; j++)
+    {
+      tau_acc = tau_acc + analogRead(flexpin1);
+      delay(1);
+    }
+    mean_tau = tau_acc / 1000;
+    Serial.print("  ");
+    Serial.println(mean_tau);
+    if( mean_tau > 0 )
+    {
+       sensor_array[k] = mean_tau;
+       position_array[k] = go_to_pos;
+       size_array = k;
+       k++;
+    }
+    delay(15);
+    tau_acc = 0;
+    i++;
+    tau = analogRead(flexpin1);
+  }
+  myservo.detach();  // detaches the servo on pin 9 to the servo object
+  
+  for(i=0; i <= size_array ; i++)
+  {
+    Serial.print(sensor_array[i]);
+    Serial.print("  ");
+    Serial.println(position_array[i]);
+  }
+  
+}
+
+int force2pos(int tau)
+{
+  int pos;
+  int i = 0;
+  int e0, e1;
+  int tau_a = sensor_array[i];
+  
+  while( tau > tau_a )
+  {
+    i++;
+    tau_a = sensor_array[i];    
+    // ERROR: prevent overflow
+    if( i > size_array )
+      return position_array[size_array]+1;
+     
+  }
+  if( i>0 )
+  {  
+    e0 = tau - sensor_array[i-1];
+    e1 = sensor_array[i] - tau;
+    if( e0 < e1 )
+      pos = position_array[i-1];
+    else
+      pos = position_array[i];
+  }
+  else
+  {
+    e0 = tau;
+    e1 = sensor_array[0] - tau;
+    if( e0 < e1 )
+      pos = position_array[0]-1;
+    else
+      pos = position_array[0];
+  }
+
+  return pos;
+  
 }
 
 void run_calibration(){
@@ -375,7 +503,7 @@ void setup() {
   //Serial.begin(9600);
   // Initialze the controller
   //setup_servo();
-  fc.init();
+  //fc.init();
 }
 
 // the loop routine runs over and over again forever:
@@ -388,6 +516,8 @@ void loop() {
     command = comint.getChar();
     value_int = comint.getInt();
     value_float = comint.getDouble();
+    //value_int = comint.getValue();
+    
     Serial.println(command);
   }
   //Serial.println("loop");
@@ -417,8 +547,14 @@ void loop() {
         Serial.print("Float is ");       
         Serial.println(dummy);
         break;
-      case 'C': // Dummy fuction, just for debugging float
+      case 'C': 
         RunCal = 1;
+        break;
+      case 'c':
+        Serial.print("Desire force ");
+        Serial.print(value_int);
+        Serial.print(" is  pos ");
+        Serial.println( force2pos(value_int) );
         break;
       case 'N':
         NoOfRepetions = value_int; //set_value;
@@ -515,7 +651,8 @@ void loop() {
   }
   if( RunCal == 1)
   {
-    run_calibration();
+    //run_calibration();
+    new_calibration();
     RunCal = 0;
   }
   
