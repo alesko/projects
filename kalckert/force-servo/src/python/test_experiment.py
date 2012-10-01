@@ -11,26 +11,32 @@ import random
 
 # Read force from file and put in array
 
-k = 1141;
-g = 9.81;
+# Constants,
+k = 1141; # Sensor parameter (from calibration)
+g = 9.81; # Earth's gravity, fairly constant...
 
-fpname="forces1.txt"
-fp = open(fpname,"r");
-A = [];
-c = fp.readline()
+fpname="forces1.txt";       # Filename with forces
+fp = open(fpname,"r"); 
+A = [];                     # Create array with zero elements
+c = fp.readline();          # Read one line
 
-while c != '':
-    v = int(float(c)*k/g);
-    A.append(v);
-    c = fp.readline()
+while c != '':              # Check for an empty line
+    v = int(float(c)*k/g);  # Convert force to volt
+    A.append(v);            # Put into the array
+    c = fp.readline();      # Continue reading one line
 
-fp.close()
+fp.close();
 # Random shuffle the array
-#random.shuffle(A)
+random.shuffle(A)
+#---------------------------------------------------------------
+
 
 # Change port name (/dev/ttyXXX) to the appropriate port,
 # XXX is the port name on POSIX system (MacOSX, Linux)
-ser = serial.Serial('/dev/tty.usbmodemfd3331', 9600, timeout=1)
+ser = serial.Serial('/dev/tty.usbmodemfd3331', 9600, timeout=1000)
+
+# Run calibration
+#ser.write("C;")
 
 # Change settings in the Arduino
 # Pause duration 1500ms:
@@ -46,7 +52,7 @@ f_len =  len(A);
 cstr = "I" + str(f_len) + ";"
 ser.write(cstr)
 
-# Write the force data to the Arduino
+# Write the force data from the array to the Arduino
 for i in range(len(A)):
     cstr = "E" + str(i)+ ";"
     ser.write(cstr) 
@@ -55,10 +61,9 @@ for i in range(len(A)):
     ser.write(cstr) 
     print cstr
 
-# Use force array
+# Tell Arduino to use force array
 cstr = "A;"
 ser.write(cstr) 
-
 
 # Set the filename to the curret date and time + .log
 fpname = strftime("%Y%m%d-%H%M%S")+'.log'

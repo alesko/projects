@@ -62,7 +62,7 @@ int ElemetIndex = 0;
 int ForceInElement = 0;
 int NumberOfForceElements = 24;
 int ForceArray[128];
-int Debug = 1;
+int Debug = 0;
 
 ComInterfaceClass comint;
 //ForceServoClass fc(servoPin, pospin, flexpin1, 10 );
@@ -77,6 +77,7 @@ Servo myservo;  // create servo object to control a servo
 int pos_set;
 int pos_in;
 unsigned long gtime;
+unsigned long gtimestart;
 unsigned long gtime_old;
 unsigned long dt;
 float k_p, k_d;
@@ -162,6 +163,7 @@ void beep(int dur)
   //int dur = 500;
   for(long int i=0;i < dur * 1000L; i += a_tone*2)
   {
+     run_measure();
      digitalWrite(speakerPin,HIGH);
      delayMicroseconds(a_tone);
      digitalWrite(speakerPin,LOW);
@@ -184,8 +186,8 @@ void run_experiment(){
       beep(warningDuration);
       // Match sensor of force set from array
 
-      Serial.print("Force is ");
-      Serial.println(ForceArray[i]);
+      //Serial.print("Force is ");
+      //Serial.println(ForceArray[i]);
         
       //fc.attach_servo();
       myservo.attach(servoPin);  // attaches the servo on pin 9 to the servo object
@@ -197,17 +199,15 @@ void run_experiment(){
       int pos = force2pos(ForceArray[i]);
       
       while( acc < Duration)
-      {    
+      { 
+        run_measure();
         acc = millis() - t0;
         if( SensorOrArrayInput == 1)
         {
           //fc.run_controller(ForceArray[i]);
-          
-          
-          Serial.print("Force is ");
-          Serial.print(ForceArray[i]);
-          Serial.print("  Pos is ");
-          Serial.println(pos);
+          //Serial.print("Force is ");
+          //Serial.print(ForceArray[i]);
+          //Serial.print("  Pos is ");
           myservo.write(pos);
          
         }
@@ -222,7 +222,9 @@ void run_experiment(){
       digitalWrite(redledPin,HIGH);
       //fc.detach_servo();
       myservo.detach();  // detaches the servo on pin 9 to the servo object
+      
       delay(PauseDuration);
+      
     }
     delay(PauseDuration);
   }
@@ -267,18 +269,18 @@ void new_calibration(){
   tau = analogRead(flexpin1);
   while( tau < (stauration - margin) )
   {
-    Serial.print("In tau < (stauration - margin): ");
+    //Serial.print("In tau < (stauration - margin): ");
     go_to_pos = start_set+i;
     myservo.write(go_to_pos);
-    Serial.print(go_to_pos);
+    //Serial.print(go_to_pos);
     for(int j =0; j < 999; j++)
     {
       tau_acc = tau_acc + analogRead(flexpin1);
       delay(1);
     }
     mean_tau = tau_acc / 1000;
-    Serial.print("  ");
-    Serial.println(mean_tau);
+    //Serial.print("  ");
+    //Serial.println(mean_tau);
     if( mean_tau > 0 )
     {
        sensor_array[k] = mean_tau;
@@ -291,14 +293,16 @@ void new_calibration(){
     i++;
     tau = analogRead(flexpin1);
   }
+  myservo.write(0);
+  delay(1000);
   myservo.detach();  // detaches the servo on pin 9 to the servo object
   
-  for(i=0; i <= size_array ; i++)
+  /*for(i=0; i <= size_array ; i++)
   {
     Serial.print(sensor_array[i]);
     Serial.print("  ");
     Serial.println(position_array[i]);
-  }
+  }*/
   
 }
 
@@ -384,8 +388,11 @@ void run_calibration(){
 
 void run_measure(){
   
+  unsigned long t = millis();
   int m0 = analogRead(flexpin0);
   int m1 = analogRead(flexpin1);
+  Serial.print(t-gtimestart);
+  Serial.print(" ");
   Serial.print(m0);
   Serial.print(" ");
   Serial.println(m1);
@@ -482,6 +489,7 @@ void setup_servo()
 // the setup routine runs once when you press reset:
 void setup() {
 
+  gtimestart = millis();
   Serial.begin(9600);
   //Serial.println("setup");
   for(int i = 0; i < 128; i++)
@@ -518,7 +526,7 @@ void loop() {
     value_float = comint.getDouble();
     //value_int = comint.getValue();
     
-    Serial.println(command);
+    //Serial.println(command);
   }
   //Serial.println("loop");
   
