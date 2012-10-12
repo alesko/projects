@@ -1,0 +1,48 @@
+Move to src:
+>cd src
+
+Pick the right Makefile,
+For Linux:
+>ln -s Makefile.Linux Makefile
+
+For Mac OS:
+>ln -s Makefile.MacOS Makefile
+
+Compile:
+> make
+
+Move from src:
+>cd ..
+
+Create a data directory:
+>mkdir data
+
+Start the program:
+>./TapoMeter 
+
+The program can take the following arguments:
+-c x
+where x is the threshold to detect a measure
+-k x
+where x is the multiplication factor, i.e., to register a tap a
+
+Example usage:
+./TapoMeter -c 0.05 -k 1.4
+
+The threshold will be 0.05 (anything below will be regarded as noise) and the multiplication factor will be 1.4 (a force above 1.4*c will trigger the tap detection algorithm).
+Default values are c: 0.007, k: 1.1
+
+While the program is running use the mouse to change threshold and multiplier with from the menu (actived by the mouse right button),
+
+or the keybord, by typing:
++/? to increase the threshold
+-/- to decrease the threshold
+</> to increase the multiplier
+./: to decrease the multiplier
+q/Q/esc to quit the program
+
+Look at the data:
+>cd data
+
+Open the file (with Octave or Matlab)
+

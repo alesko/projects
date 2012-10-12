@@ -78,15 +78,14 @@ ser.write(cstr)
 # Recive force data
 if (ser.isOpen()):
     line = ser.readline()
-    #print line
-    while ( line > -1 ):
-        line = ser.readline()
+    print line
+    while ( line > 0 ):
+        #line = ser.readline()
         print line
         fp.write(line)
-        line = -1
-
-else:
-    print "Error when opening port"
+        line = ser.readline()
+#else
+#    print "Error when opening port"
 
 
 fp.close()

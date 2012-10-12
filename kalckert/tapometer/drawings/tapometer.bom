@@ -1,0 +1,25 @@
+Partlist
+
+Exported from tapometer.sch at 2012-10-12 14.19
+
+EAGLE Version 6.2.0 Copyright (c) 1988-2012 CadSoft
+
+Assembly variant: 
+
+Part     Value          Device       Package           Library         Sheet
+
+IC1      7905L          7905L        TO92              linear          1
+IC2      7805L          7805L        TO92              linear          1
+R1       10k            R-EU_0207/10 0207/10           rcl             1
+R2       100k           R-EU_0207/10 0207/10           rcl             1
+R3                      R-EU_0207/10 0207/10           rcl             1
+R4                      R-EU_0207/10 0207/10           rcl             1
+R5       100k           R-EU_0207/10 0207/10           rcl             1
+R6       100k           R-EU_0207/10 0207/10           rcl             1
+R7       100k           R-EU_0207/10 0207/10           rcl             1
+U$1      MCP6004-E/P    MCP6004-E/P  DIP254P762X533-14 microchip6004   1
+X1                      F09HP        F09HP             con-subd        1
+X2                      MPT2         2POL254           con-phoenix-254 1
+X3                      MPT8         8POL254           con-phoenix-254 1
+X4                      MPT10        10POL254          con-phoenix-254 1
+X5                      MPT2         2POL254           con-phoenix-254 1

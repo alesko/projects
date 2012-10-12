@@ -32,10 +32,10 @@ int sliderPin = 3; // analog pin used to connect the slider potentiometer
 
 // Digital IO pins
 int speakerPin = 4; // 7
-int servoPin = 9;
+int servoPin = 3;
 int greenledPin = 7; // 5
 int redledPin = 6; // 4
-int buttonPin = 3;
+//int buttonPin = 3;
 
 int fieldIndex = 0;
 int value_int; //[NUMBER_OF_FIELDS];
@@ -230,27 +230,43 @@ void run_experiment(){
   }
 }
 
-void new_calibration(){
+int new_calibration(){
   myservo.attach(servoPin);  // attaches the servo on pin 9 to the servo object
   
-  int start_set = 30;
+  int start_set = 50;
   int go_to_pos;
   myservo.write(start_set);
   
   int tau = analogRead(flexpin1);
   int i = 0;
   // Make contact
-  while( tau < 10) // Prevent noise
+  unsigned long t0 = millis();
+  while( tau < 30) // Prevent noise
   {
     //Serial.print("In while( tau < 1): ");
     go_to_pos = start_set+i;
-    //Serial.print(go_to_pos);
+    if( go_to_pos > 170)
+      go_to_pos = 170;
+    if( go_to_pos < 10)
+      go_to_pos = 10;
+    Serial.println(go_to_pos);
     myservo.write(go_to_pos); 
     tau = analogRead(flexpin1);
     //Serial.print("  ");
     //Serial.println(tau);
     delay(15);
     i++;
+    if( (millis() - t0) > 4500)
+    {
+      myservo.write(10);
+      Serial.print(millis());
+      Serial.print("  ");
+      Serial.print(t0);
+      Serial.println("  Time out");
+      delay(500);
+      myservo.detach();
+      return -1;
+    }
   }
   // Retract 5 steps, should be enough
   go_to_pos = go_to_pos -5;
@@ -267,20 +283,23 @@ void new_calibration(){
   i = 0;
   int k = 0;
   tau = analogRead(flexpin1);
+  Serial.println("Here");
   while( tau < (stauration - margin) )
   {
     //Serial.print("In tau < (stauration - margin): ");
     go_to_pos = start_set+i;
     myservo.write(go_to_pos);
-    //Serial.print(go_to_pos);
+    if( go_to_pos > 170)
+      go_to_pos = 170;
+    if( go_to_pos < 10)
+      go_to_pos = 10;
+    Serial.println(go_to_pos);
     for(int j =0; j < 999; j++)
     {
       tau_acc = tau_acc + analogRead(flexpin1);
       delay(1);
     }
     mean_tau = tau_acc / 1000;
-    //Serial.print("  ");
-    //Serial.println(mean_tau);
     if( mean_tau > 0 )
     {
        sensor_array[k] = mean_tau;
@@ -292,6 +311,8 @@ void new_calibration(){
     tau_acc = 0;
     i++;
     tau = analogRead(flexpin1);
+    Serial.print(tau);
+    Serial.print("  ");
   }
   myservo.write(0);
   delay(1000);
@@ -303,7 +324,7 @@ void new_calibration(){
     Serial.print("  ");
     Serial.println(position_array[i]);
   }*/
-  
+   return 1;
 }
 
 int force2pos(int tau)
@@ -505,7 +526,7 @@ void setup() {
   pinMode(redledPin,OUTPUT);  
   digitalWrite(greenledPin,LOW);
   digitalWrite(redledPin,LOW);
-  pinMode(buttonPin, INPUT);   
+  //pinMode(buttonPin, INPUT);   
 
   // initialize serial communication at 9600 bits per second:
   //Serial.begin(9600);
