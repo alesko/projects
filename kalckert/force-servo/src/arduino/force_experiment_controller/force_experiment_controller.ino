@@ -37,10 +37,9 @@ int greenledPin = 7; // 5
 int redledPin = 6; // 4
 //int buttonPin = 3;
 
-int fieldIndex = 0;
-int value_int; //[NUMBER_OF_FIELDS];
-float value_float; //[NUMBER_OF_FIELDS];
-char command;
+//int fieldIndex = 0;
+ //[NUMBER_OF_FIELDS];
+ //[NUMBER_OF_FIELDS];
 int g_READY = 0;
 
 // Software set min and max position
@@ -64,8 +63,8 @@ int NumberOfForceElements = 24;
 int ForceArray[128];
 int Debug = 0;
 
+// Communication interface class
 ComInterfaceClass comint;
-//ForceServoClass fc(servoPin, pospin, flexpin1, 10 );
 
 // The "dynamic" arrays for force position correspondence
 int sensor_array[20];
@@ -74,12 +73,12 @@ int size_array = 0;
 
 // Contoller parameters
 Servo myservo;  // create servo object to control a servo 
-int pos_set;
-int pos_in;
+int pos_set;    // Does it needt to be global?
+int pos_in;     // Does it needt to be global?
 unsigned long gtime;
 unsigned long gtimestart;
 //unsigned long gtime_old;
-unsigned long dt;
+//unsigned long dt;
 //float k_p, k_d;
 
 void beep(int dur)
@@ -155,16 +154,25 @@ void run_experiment(){
   }
 }
 
-int new_calibration(){
-  myservo.attach(servoPin);  // attaches the servo on pin 9 to the servo object
-  
+int calibration(){
+
+  int stauration = 1023; // Sensor is saturated
+  int margin = 50;      // Arbitrary number, derived empirically
+  int mean_tau = 0;  
+  long tau_acc = 0;
   int start_set = 50;
   int go_to_pos;
+  
+  myservo.attach(servoPin);  // attaches the servo on pin 9 to the servo object
+  
+  // Go to starting position
+
   myservo.write(start_set);
   
+  // Drive arm down to make contact
   int tau = analogRead(flexpin1);
   int i = 0;
-  // Make contact
+  
   unsigned long t0 = millis();
   while( tau < 50) // Prevent noise
   {
@@ -193,29 +201,27 @@ int new_calibration(){
       return -1;
     }
   }
+  
   // Retract 5 steps, should be enough
   go_to_pos = go_to_pos -5;
   start_set = go_to_pos;
   myservo.write(go_to_pos);
   delay(150); // Wait for servo
   
-  int stauration = 1023; // Sensor is saturated
-  int margin = 50;      // Arbitrary number, derived empirically
   
-  int mean_tau = 0;
-  
-  long tau_acc = 0;
   i = 0;
   int k = 0;
   tau = analogRead(flexpin1);
- 
+
+  // Start calibration process
+
   while( tau < (stauration - margin) )
   {
     //Serial.print("In tau < (stauration - margin): ");
     go_to_pos = start_set+i;
     myservo.write(go_to_pos);
-    if( go_to_pos > 170)
-      go_to_pos = 170;
+    if( go_to_pos > 160)
+      go_to_pos = 160;
     if( go_to_pos < 10)
       go_to_pos = 10;
     Serial.print("Go to pos: ");
@@ -241,6 +247,7 @@ int new_calibration(){
     Serial.print(tau);
     Serial.print("  ");
   }
+  
   myservo.write(0);
   delay(1000);
   myservo.detach();  // detaches the servo on pin 9 to the servo object
@@ -420,8 +427,13 @@ void setup() {
 // the loop routine runs over and over again forever:
 void loop() {
   
+  int value_int;
+  float value_float;
+  char command;
   float dummy;
+  
   g_READY = comint.ReadCommand();
+  
   if( g_READY !=  0)
   {
     command = comint.getChar();
@@ -558,7 +570,7 @@ void loop() {
   if( RunCal == 1)
   {
     //run_calibration();
-    new_calibration();
+    calibration();
     RunCal = 0;
   }
   
