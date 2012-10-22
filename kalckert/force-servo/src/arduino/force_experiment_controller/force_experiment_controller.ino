@@ -241,9 +241,9 @@ int new_calibration(){
   int i = 0;
   // Make contact
   unsigned long t0 = millis();
-  while( tau < 30) // Prevent noise
+  while( tau < 50) // Prevent noise
   {
-    //Serial.print("In while( tau < 1): ");
+    Serial.print("In while( tau < 1): ");
     go_to_pos = start_set+i;
     if( go_to_pos > 170)
       go_to_pos = 170;
@@ -283,7 +283,7 @@ int new_calibration(){
   i = 0;
   int k = 0;
   tau = analogRead(flexpin1);
-  Serial.println("Here");
+ 
   while( tau < (stauration - margin) )
   {
     //Serial.print("In tau < (stauration - margin): ");
@@ -293,6 +293,7 @@ int new_calibration(){
       go_to_pos = 170;
     if( go_to_pos < 10)
       go_to_pos = 10;
+    Serial.print("Go to pos: ");
     Serial.println(go_to_pos);
     for(int j =0; j < 999; j++)
     {
@@ -311,6 +312,7 @@ int new_calibration(){
     tau_acc = 0;
     i++;
     tau = analogRead(flexpin1);
+    Serial.print("Tau: ");
     Serial.print(tau);
     Serial.print("  ");
   }

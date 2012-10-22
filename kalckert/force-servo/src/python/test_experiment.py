@@ -27,13 +27,13 @@ while c != '':              # Check for an empty line
 
 fp.close();
 # Random shuffle the array
-random.shuffle(A)
+#random.shuffle(A)
 #---------------------------------------------------------------
 
 
 # Change port name (/dev/ttyXXX) to the appropriate port,
 # XXX is the port name on POSIX system (MacOSX, Linux)
-ser = serial.Serial('/dev/tty.usbmodemfd3331', 9600, timeout=1000)
+ser = serial.Serial('/dev/tty.usbmodemfd3331', 9600, timeout=10)
 
 # Run calibration
 #ser.write("C;")
@@ -79,7 +79,7 @@ ser.write(cstr)
 if (ser.isOpen()):
     line = ser.readline()
     print line
-    while ( line > 0 ):
+    while ( line !='' ):
         #line = ser.readline()
         print line
         fp.write(line)
