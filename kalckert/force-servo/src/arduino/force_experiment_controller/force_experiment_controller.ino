@@ -78,84 +78,9 @@ int pos_set;
 int pos_in;
 unsigned long gtime;
 unsigned long gtimestart;
-unsigned long gtime_old;
+//unsigned long gtime_old;
 unsigned long dt;
-float k_p, k_d;
-
-void run_controller(int duration, int force_des)
-{
-  myservo.attach(servoPin);  // attaches the servo on pin 9 to the servo object
-  digitalWrite(redledPin,LOW);
-  digitalWrite(greenledPin ,HIGH);
-  
-  gtime = millis();
-  pos_in = analogRead(pospin);
-  
-  unsigned long t0=gtime;
-  unsigned long acc = 0;
-  
-  while( acc < duration)
-  {
-    gtime_old = gtime;
-    int pos_old = pos_in;
-    pos_in = analogRead(pospin);
-    gtime = millis();
-    acc = gtime-t0;
-    dt = gtime - gtime_old;  
-    
-    int tau_des;
-    if (force_des == -1)
-    {
-      tau_des= analogRead(flexpin0);
-    }
-    else
-    {
-      tau_des = force_des; 
-    }
-    int tau = analogRead(flexpin1);
-    int e_tau = tau_des-tau;
-    
-    float q_dot = (float)(pos_old - pos_in)/(float)dt;
-    float e_tau_f = (float)e_tau;
-    float u = 3.3*k_p*e_tau_f-k_d*q_dot;
-    
-    int old_pos_set = pos_set;
-    if(  pos_in > pos_in_max_s)
-    {
-      Serial.println("Over max");
-      u = 1;
-    }
-    if(  pos_in < pos_in_min_s)
-    {
-      Serial.println("Under min");
-      u = -1;
-    }
-    if( u > 10 )
-      u= 10;
-    if( u < -10 )
-      u= -10;
-    if( u > 0.5 | u < -0.5 )
-    {
-      pos_set = pos_set + (int)u;
-      myservo.write(pos_set);
-    }
-
-    Serial.print(gtime);
-    Serial.print(" ");
-    Serial.print(tau_des);
-    Serial.print(" ");
-    Serial.print(tau);
-    Serial.print(" ");
-    Serial.println(u);
-    
-    
-    delay(10);
-  }
-  digitalWrite(greenledPin,LOW);
-  digitalWrite(redledPin,HIGH);
-  myservo.detach();  // attaches the servo on pin 9 to the servo object
-  
-}
+//float k_p, k_d;
 
 void beep(int dur)
 {
@@ -368,46 +293,7 @@ int force2pos(int tau)
   
 }
 
-void run_calibration(){
-  
-  gtime = millis();  
-  unsigned long t0=gtime;
-  unsigned long acc = 0;
-  int firstroundflag = 1;
-  int average0, average1;
-  int iter=10;
-  
-  
-  //while( acc < Duration)
-  for( int i = 0; i < 150 ; i++)
-  {
-    // start with 10 measurments
-    if ( firstroundflag == 1)
-    {
-      average0 = 0.1*analogRead(flexpin0);
-      average1 = 0.1*analogRead(flexpin1);
-      for(int i=1; i < 10;i++)
-      {
-        average0 =  average0 + 0.1*analogRead(flexpin0);
-        average1 =  average1 + 0.1*analogRead(flexpin1);
-      }
-      firstroundflag = 0;
-    }
-   //continue with a moving average
 
-    average0 =  0.9*average0 + 0.1*analogRead(flexpin0);
-    average1 =  0.9*average1 + 0.1*analogRead(flexpin1);
-    
-    gtime = millis();
-    acc = gtime-t0;
-    //Serial.print("C ");
-    Serial.print(average0);
-    Serial.print(" ");
-    Serial.println(average1);
-    delay(20);
-  }
-  Serial.println(" ");
-}
 
 void run_measure(){
   
@@ -504,8 +390,8 @@ void setup_servo()
   myservo.detach();  // attaches the servo on pin 9 to the servo object
 
   // Init gains  
-  k_d = 0.00; //1.7;
-  k_p = 0.012; //0.012; //0.018; // 0.012
+  //k_d = 0.00; //1.7;
+  //k_p = 0.012; //0.012; //0.018; // 0.012
 }
 
 
@@ -528,13 +414,7 @@ void setup() {
   pinMode(redledPin,OUTPUT);  
   digitalWrite(greenledPin,LOW);
   digitalWrite(redledPin,LOW);
-  //pinMode(buttonPin, INPUT);   
 
-  // initialize serial communication at 9600 bits per second:
-  //Serial.begin(9600);
-  // Initialze the controller
-  //setup_servo();
-  //fc.init();
 }
 
 // the loop routine runs over and over again forever:
@@ -547,12 +427,7 @@ void loop() {
     command = comint.getChar();
     value_int = comint.getInt();
     value_float = comint.getDouble();
-    //value_int = comint.getValue();
-    
-    //Serial.println(command);
   }
-  //Serial.println("loop");
-  
   
   if( g_READY ==  1)
   {
@@ -648,7 +523,7 @@ void loop() {
         Debug = 1;
         Serial.println("Debugging info is turned on");
         break;
-      case 'p':
+      /*case 'p':
         k_p = (float) value_int + value_float; //set_value;
         if( 1 == Debug)
         {
@@ -663,7 +538,7 @@ void loop() {
           Serial.print("k_d is");
           Serial.println(k_d);
         }
-        break;
+        break;*/
       case 'q':
         Debug = 0;
         break;
@@ -690,5 +565,127 @@ void loop() {
   delay(1);        // delay in between reads for stability
   
 }
+
+// Remove below code... later
+
+/*
+void run_calibration(){
+  
+  gtime = millis();  
+  unsigned long t0=gtime;
+  unsigned long acc = 0;
+  int firstroundflag = 1;
+  int average0, average1;
+  int iter=10;
+  
+  
+  //while( acc < Duration)
+  for( int i = 0; i < 150 ; i++)
+  {
+    // start with 10 measurments
+    if ( firstroundflag == 1)
+    {
+      average0 = 0.1*analogRead(flexpin0);
+      average1 = 0.1*analogRead(flexpin1);
+      for(int i=1; i < 10;i++)
+      {
+        average0 =  average0 + 0.1*analogRead(flexpin0);
+        average1 =  average1 + 0.1*analogRead(flexpin1);
+      }
+      firstroundflag = 0;
+    }
+   //continue with a moving average
+
+    average0 =  0.9*average0 + 0.1*analogRead(flexpin0);
+    average1 =  0.9*average1 + 0.1*analogRead(flexpin1);
+    
+    gtime = millis();
+    acc = gtime-t0;
+    //Serial.print("C ");
+    Serial.print(average0);
+    Serial.print(" ");
+    Serial.println(average1);
+    delay(20);
+  }
+  Serial.println(" ");
+}
+*/
+
+/*
+void run_controller(int duration, int force_des)
+{
+  myservo.attach(servoPin);  // attaches the servo on pin 9 to the servo object
+  digitalWrite(redledPin,LOW);
+  digitalWrite(greenledPin ,HIGH);
+  
+  gtime = millis();
+  pos_in = analogRead(pospin);
+  
+  unsigned long t0=gtime;
+  unsigned long acc = 0;
+  
+  while( acc < duration)
+  {
+    gtime_old = gtime;
+    int pos_old = pos_in;
+    pos_in = analogRead(pospin);
+    gtime = millis();
+    acc = gtime-t0;
+    dt = gtime - gtime_old;  
+    
+    int tau_des;
+    if (force_des == -1)
+    {
+      tau_des= analogRead(flexpin0);
+    }
+    else
+    {
+      tau_des = force_des; 
+    }
+    int tau = analogRead(flexpin1);
+    int e_tau = tau_des-tau;
+    
+    float q_dot = (float)(pos_old - pos_in)/(float)dt;
+    float e_tau_f = (float)e_tau;
+    float u = 3.3*k_p*e_tau_f-k_d*q_dot;
+    
+    int old_pos_set = pos_set;
+    if(  pos_in > pos_in_max_s)
+    {
+      Serial.println("Over max");
+      u = 1;
+    }
+    if(  pos_in < pos_in_min_s)
+    {
+      Serial.println("Under min");
+      u = -1;
+    }
+    if( u > 10 )
+      u= 10;
+    if( u < -10 )
+      u= -10;
+    if( u > 0.5 | u < -0.5 )
+    {
+      pos_set = pos_set + (int)u;
+      myservo.write(pos_set);
+    }
+
+    Serial.print(gtime);
+    Serial.print(" ");
+    Serial.print(tau_des);
+    Serial.print(" ");
+    Serial.print(tau);
+    Serial.print(" ");
+    Serial.println(u);
+    
+    
+    delay(10);
+  }
+  digitalWrite(greenledPin,LOW);
+  digitalWrite(redledPin,HIGH);
+  myservo.detach();  // attaches the servo on pin 9 to the servo object
+  
+}
+*/
 
 
