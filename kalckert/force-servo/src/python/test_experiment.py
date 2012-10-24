@@ -22,6 +22,7 @@ c = fp.readline();          # Read one line
 
 while c != '':              # Check for an empty line
     v = int(float(c)*k/g);  # Convert force to volt
+    print v
     A.append(v);            # Put into the array
     c = fp.readline();      # Continue reading one line
 

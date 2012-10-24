@@ -48,6 +48,8 @@ int pos_in_max;
 int pos_in_min_s;
 int pos_in_max_s;
 
+  int start_set;// = 50;
+
 // Variable that the user can change
 int RunExp = 0;
 int RunMeasure = 0;
@@ -67,8 +69,10 @@ int Debug = 0;
 ComInterfaceClass comint;
 
 // The "dynamic" arrays for force position correspondence
-int sensor_array[20];
-int position_array[20];
+// This array might need to be extended...
+const int G_VEC_LEN = 20;
+int sensor_array[G_VEC_LEN];
+int position_array[G_VEC_LEN];
 int size_array = 0;
 
 // Contoller parameters
@@ -152,17 +156,21 @@ void run_experiment(){
     }
     delay(PauseDuration);
   }
+  myservo.attach(servoPin);  // attaches the servo on pin 9 to the servo object
+  myservo.write(start_set);
+  delay(1000);
+  myservo.detach();  // detaches the servo on pin 9 to the servo object
 }
 
 int calibration(){
 
   int stauration = 1023; // Sensor is saturated
-  int margin = 50;      // Arbitrary number, derived empirically
+  int margin = 250;      // Arbitrary number, derived empirically
   int mean_tau = 0;  
   long tau_acc = 0;
-  int start_set = 50;
   int go_to_pos;
-  
+
+  start_set = 50;  
   myservo.attach(servoPin);  // attaches the servo on pin 9 to the servo object
   
   // Go to starting position
@@ -191,12 +199,13 @@ int calibration(){
     i++;
     if( (millis() - t0) > 4500)
     {
-      myservo.write(10);
+      //myservo.write(10);
+      myservo.write(start_set);
       Serial.print(millis());
       Serial.print("  ");
       Serial.print(t0);
       Serial.println("  Time out");
-      delay(500);
+      delay(2000);
       myservo.detach();
       return -1;
     }
@@ -215,7 +224,7 @@ int calibration(){
 
   // Start calibration process
 
-  while( tau < (stauration - margin) )
+  while( (tau < (stauration - margin)) && (k < G_VEC_LEN) )
   {
     //Serial.print("In tau < (stauration - margin): ");
     go_to_pos = start_set+i;
@@ -225,7 +234,7 @@ int calibration(){
     if( go_to_pos < 10)
       go_to_pos = 10;
     Serial.print("Go to pos: ");
-    Serial.println(go_to_pos);
+    Serial.print(go_to_pos);
     for(int j =0; j < 999; j++)
     {
       tau_acc = tau_acc + analogRead(flexpin1);
@@ -243,13 +252,12 @@ int calibration(){
     tau_acc = 0;
     i++;
     tau = analogRead(flexpin1);
-    Serial.print("Tau: ");
-    Serial.print(tau);
-    Serial.print("  ");
+    Serial.print("   Tau: ");
+    Serial.println(tau);
   }
   
-  myservo.write(0);
-  delay(1000);
+  myservo.write(start_set);
+  delay(2000);
   myservo.detach();  // detaches the servo on pin 9 to the servo object
   
   /*for(i=0; i <= size_array ; i++)
